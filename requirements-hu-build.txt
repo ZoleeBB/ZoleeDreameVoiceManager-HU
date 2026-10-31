@@ -1,0 +1,3 @@
+# Pin direct dependencies, do not use 'latest' automatically.
+requests==2.34.2
+pyinstaller==6.22.3
