@@ -536,6 +536,27 @@ _TRANSLATIONS.update({
   "Kontingent aufgebraucht.": "Elfogyott a kreditkeret.",
 })
 
+# Disabled-page messages from NavShell and MainWindow; the page label
+# is already Hungarian when the user clicks it.
+_TRANSLATIONS.update({
+    "Dafür muss die App erst wissen, welches Modell dein Roboter ist. Melde dich auf der Startseite an.":
+        "Először jelentkezz be a Kezdőlapon, hogy a program felismerje a robotod modelljét.",
+    "Dafür fehlt noch das offizielle Sprachpaket deines Roboters. Es wird auf der Startseite einmalig geholt.":
+        "Még nincs letöltve a robot gyári hangcsomagja. A Kezdőlapon töltheted le egyszer, a későbbiekben újrahasználjuk.",
+    "Melde dich auf der Startseite an und wähle deinen Roboter.":
+        "Jelentkezz be a Kezdőlapon, majd válaszd ki a robotodat.",
+    "Das offizielle Sprachpaket deines Roboters wird auf der Startseite einmalig geholt.":
+        "A Kezdőlapon egyszer kell letöltened a robotod gyári hangcsomagját.",
+    "Wähle oben aus, wie dein Roboter klingen soll.":
+        "Fent válaszd ki a robot új hangját.",
+    "Originalpaket fehlt":
+        "Hiányzik a gyári hangcsomag",
+})
+
+_DYNAMIC.extend((re.compile(a), b) for a, b in [
+    (r"^(.+) geht noch nicht$", r"\1 még nem használható"),
+])
+
 def translate(value):
     """Translate only UI-visible text, preserving technical identifiers."""
     if not isinstance(value, str) or not value:
