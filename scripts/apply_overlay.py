@@ -81,20 +81,24 @@ def main() -> None:
     patch("dreamevoice/ui/app.py", [
         (
             '        self.bind("<F11>", lambda _e: self._toggle_maximize())',
-            '        # These two links are in the persistent header,\n'
-            '        # so they remain available on ALL tabs/pages.\n'
-            '        ttk.Button(right, text="Ko-fi támogatás",\n'
+            '        self.bind("<F11>", lambda _e: self._toggle_maximize())\n'
+            '\n'
+            '        # A külön támogatási sáv minden oldal ELEJÉN látszik.\n'
+            '        # Nem a szűk fejléc jobb oldalára kerül: így nem\n'
+            '        # szorulhatnak ki a gombok kisebb képernyőn sem.\n'
+            '        support = ttk.Frame(self, style="TFrame")\n'
+            '        support.pack(fill="x", padx=20, pady=(12, 0))\n'
+            '        ttk.Label(support, text="Támogatás",\n'
+            '                  style="MutedBg.TLabel").pack(side="left", padx=(0, 12))\n'
+            '        ttk.Button(support, text="Ko-fi támogatás",\n'
             '                   style="Small.TButton",\n'
             '                   command=lambda: webbrowser.open(\n'
-            '                       "https://ko-fi.com/E1H8299KGN")).pack(\n'
-            '                       side="left", padx=(8, 0))\n'
-            '        ttk.Button(right, text="Revolut támogatás",\n'
+            '                       "https://ko-fi.com/E1H8299KGN")).pack(side="left")\n'
+            '        ttk.Button(support, text="Revolut-me támogatás",\n'
             '                   style="Small.TButton",\n'
             '                   command=lambda: webbrowser.open(\n'
             '                       "https://revolut.me/zoleebb")).pack(\n'
-            '                       side="left", padx=(8, 0))\n'
-            '\n'
-            '        self.bind("<F11>", lambda _e: self._toggle_maximize())',
+            '                       side="left", padx=(8, 0))\n',
         ),
     ])
 
