@@ -60,6 +60,20 @@ class ReleaseVersionTests(unittest.TestCase):
             with self.subTest(invalid=invalid), self.assertRaises(ValueError):
                 set_version(invalid, self.root)
 
+    def test_hungarian_auto_update_points_to_own_build(self):
+        import inspect
+        from dreamevoice import aktualisierung
+        self.assertEqual(
+            inspect.signature(aktualisierung.pruefen)
+                   .parameters["projekt_url"].default,
+            "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU")
+        self.assertIn(
+            '== "dreamesprachpaket-hu.exe"',
+            inspect.getsource(aktualisierung.pruefen))
+        # The original author credit remains unchanged.
+        from dreamevoice import PROJEKT_URL
+        self.assertIn("Anon365-Project", PROJEKT_URL)
+
     def test_support_section_stays_in_shared_app_header(self):
         source = (Path(__file__).resolve().parents[1] / "dreamevoice"
                   / "ui" / "app.py").read_text(encoding="utf-8-sig")
