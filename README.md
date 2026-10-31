@@ -45,6 +45,31 @@ A programba bekerült a felhasználó 2026. október 31-én átadott, kézzel sz
 
 **Szöveghűség:** a `tests/test_hu_preset.py` a teljes 589 bejegyzés SHA-256 ellenőrzőösszegét és a korábbi személyre szabott mondatokat is ellenőrzi. A felhasználó által írt szövegeket (szleng, humor, helyesírás) nem módosítjuk automatikusan.
 
+## Támogatott Dreame / MOVA / Trouver robotok
+
+A program **nem egy rögzített modellnévlistával** dolgozik: minden belépéskor lekérdezi a kiválasztott robot **hivatalos Dreame hangcsomag-katalógusát**, és az adott modell eredeti hangcsomagjából készít módosított változatot. Ezért **az összes olyan Dreame, MOVA és Trouver modell támogatott, amelynél a Dreamehome alkalmazásban működik a nyelvi hangcsomag kiválasztása és a robot támogatja annak telepítését**.
+
+A rögzített upstream **v1.4.0** kompatibilitási felmérése **714 azonosító** közül **402 modellazonosítóhoz** talált hangcsomag-katalógust:
+
+| Márka | Hangcsomag-katalógussal rendelkező modellazonosítók |
+| --- | ---: |
+| Dreame | **288** |
+| MOVA | **97** |
+| Trouver | **17** |
+| **Összesen** | **402** |
+
+A további 312 vizsgált modellhez nem volt katalógus (például korábbi Mi Home-os készülékek). A gyakorlatban az összes támogatott modell **aktuális listáját a hivatalos szolgáltatás határozza meg**; a 402 az upstream akkori felmérése, nem garantált, naprakész, 402 terméknevet tartalmazó lista.
+
+Az upstream ellenőrzött kompatibilitási mintái (a modellkód a gyári belső azonosító):
+
+- Dreame: `dreame.vacuum.r2532h`, `dreame.vacuum.r501wj`, `dreame.vacuum.r63018`, `dreame.vacuum.r9535e`, `dreame.vacuum.r2253a`.
+- MOVA: `mova.vacuum.r5769t`, `mova.vacuum.r5977e`, `mova.vacuum.r6710a`.
+- **Helyben kipróbált készülék:** Dreame **X50 Ultra Complete**.
+
+**Más modellnél** a modellfüggetlen, **589 OGG-hangot tartalmazó ZIP-et** importáld, ne az X50 gyári vezérlőadatait is tartalmazó `.tar.gz` csomagot. A program az eltérő hangazonosítókat és gyári metaadatokat a saját robothoz igazítja, de a tényleges telepítés sikerét mindig ellenőrizni kell.
+
+Forrás: [az upstream részletes modellkompatibilitási dokumentációja](https://github.com/Anon365-Project/dreame-sprachpaket-manager/blob/v1.4.0/docs/Modelle.md).
+
 ## Jelenlegi felépítés és CI/CD
 
 A privát repóban csak a **magyar kiegészítés (overlay)** van. A fordító workflow a GitHubról klónozza az eredeti program pontosan rögzített `v1.4.0` kiadását (`852f3043727fc85a3c06cb54231a00de013b1492`), majd a `scripts/apply_overlay.py` módosításait és a **saját szövegeidet** (`dreamevoice/hu_preset.py`) alkalmazza.
