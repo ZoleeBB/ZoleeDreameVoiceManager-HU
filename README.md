@@ -1,4 +1,17 @@
-# Zolee - Dreame Voice Manager HU – privát fejlesztői változat
+<h1 align="center"><img src="assets/branding/readme-banner.svg" alt="Zolee Dreame Voice Manager HU" width="1600"></h1>
+
+[![Támogatás Ko-fi-n](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1H8299KGN) [![Támogatás Revoluton](assets/branding/revolut-support.svg)](https://revolut.me/zoleebb)
+
+## Előre elkészített magyar hangcsomagok minden új Release-ben
+
+A kész Elison-hangok **589 magyar bemondást** tartalmaznak. **Nem kell hozzá ElevenLabs API-kulcs vagy kredit.** Egyszer töltsd fel a két bináris fájlt a `voicepacks/assets/` mappába (GitHub **Add file → Upload files**), ezt követően az automatizált Release minden új verzióhoz csatolja őket.
+
+- **`Zolee_Dreame_HU_Elison_589_OGG.zip`** — ajánlott, modellhez igazítható, gyári hangoktól mentes 589 magyar OGG.
+- **`Zolee_Dreame_X50_HU_Elison_Ready.tar.gz`** — X50 Ultra Complete modellhez teljes, 611 hangos csomag; gyári eredeti hangokat is tartalmaz, ezért csak privát körben terjeszthető a jogok tisztázásáig.
+
+Az Actions pipeline az ellenőrzőösszeget és a teljes archívumtartalmat validálja, csak azután hozza létre vagy frissíti a Release-assets listáját. **Ha a fájlok nincsenek a repóban, a Release szándékosan meghiúsul**, nehogy hiányos letöltést kínáljon. Az első, egyszeri feltöltés után nincs több kézi Release-csatolás.
+
+[**Részletes hangcsomag-telepítési útmutató**](voicepacks/README.md) · [**Egyszeri feltöltés helye**](voicepacks/assets/README.md) · [**Releases**](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases)
 
 ## 🎙️ Kész magyar robot-hangcsomag – ElevenLabs-kulcs nélkül
 
@@ -106,8 +119,3 @@ Az API kulcshoz az ElevenLabs fiókban engedélyezd a Text to Speech és a szük
 
 Az `upstream` remote az eredeti publikus projekt. Új upstream kiadást előbb ellenőrzött fejlesztői branchbe hozz be, futtasd a teszteket, és PR-rel egyesítsd. A saját magyar presetet nem írjuk felül az újraindításkor: ha egyszer már létrejött és szerkesztetted, változatlan marad.
 
-## A fejlesztés támogatása
-
-A program és a magyar hangcsomag fejlesztése szabadidős projekt. A támogatás önkéntes, nem feltétele a használatnak.
-
-[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1H8299KGN) · [Revolut támogatás](https://revolut.me/zoleebb)
