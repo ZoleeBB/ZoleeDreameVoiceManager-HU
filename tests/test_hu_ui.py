@@ -43,6 +43,21 @@ class HungarianUiTests(unittest.TestCase):
                          "✓ Ezt már elvégezted.")
         self.assertEqual(translate("    noch keine"), "    Még nincs")
 
+    def test_update_and_login_texts(self):
+        cases = [
+            ("Nachsehen, ob es eine neuere Fassung gibt", "Ellenőrzés, hogy elérhető-e újabb verzió."),
+            ("Diese Fassung:", "Jelenlegi verzió:"),
+            ("Die App fragt bei GitHub nach der neuesten Fassung. Dabei wird nichts über dich oder deinen Roboter übermittelt - aber wie bei jedem Seitenaufruf sieht die Gegenseite deine IP-Adresse. Deshalb ist die Abfrage ausgeschaltet, solange du sie nicht einschaltest.", "Az alkalmazás a GitHubon ellenőrzi, hogy elérhető-e újabb verzió. Ennek során sem rólad, sem a robotodról nem továbbít adatot, de mint minden webes kérésnél, a másik oldal látja az IP-címedet. Ezért ez az ellenőrzés ki van kapcsolva, amíg be nem kapcsolod."),
+            ("Gefunden wird nichts von selbst installiert. Die App zeigt, was neu ist, und fragt. Erst dann lädt sie die neue Datei, prüft ihre Prüfsumme und ersetzt sich selbst - ohne Installation, ohne Administratorrechte. Dein Datenordner bleibt unberührt.", "A program semmit nem telepít automatikusan. Megmutatja, mi új, és rákérdez. Csak ezután tölti le az új fájlt, ellenőrzi az ellenőrzőösszegét, majd lecseréli saját magát – telepítés és rendszergazdai jogosultság nélkül. Az adatmappád érintetlen marad."),
+            ("Die App meldet sich mit denselben Zugangsdaten an, die du in deiner Handy-App benutzt - Dreamehome, MOVA Home oder Trouver. Welche es ist, stellst du unten unter 'App' ein. Die Daten gehen ausschließlich an Dreame (MOVA und Trouver gehören dazu), nicht an Dritte. Ohne Anmeldung kennt die App weder dein Robotermodell noch kann sie ihm etwas schicken.", "Az alkalmazás ugyanazokkal a bejelentkezési adatokkal lép be, amelyeket a mobilalkalmazásban használsz – Dreamehome, MOVA Home vagy Trouver. Hogy melyiket használod, azt lent az „Alkalmazás” mezőnél állíthatod be. Az adatok kizárólag a Dreame-hez kerülnek (a MOVA és a Trouver is ide tartozik), harmadik félhez nem. Bejelentkezés nélkül az alkalmazás nem ismeri a robotod típusát, és nem tud neki semmit küldeni."),
+            ("E-Mail und Passwort wie in deiner Hersteller-App.", "Ugyanaz az e-mail-cím és jelszó, mint a gyártó alkalmazásában."),
+            ("zeigen", "mutat"),
+            ("Europa (Deutschland, Österreich, Schweiz)", "Európa (Németország, Ausztria, Svájc)"),
+        ]
+        for source, expected in cases:
+            with self.subTest(source=source[:50]):
+                self.assertEqual(translate(source), expected)
+
     def test_hungarian_progress_logs(self):
         self.assertEqual(
             translate("Erzeuge Dialektpaket: Magyar – Vicces házimunkás"),
