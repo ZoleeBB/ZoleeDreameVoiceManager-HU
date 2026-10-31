@@ -534,6 +534,8 @@ _TRANSLATIONS.update({
   "Verbinde ...": "Csatlakozás…",
   "Kontingent": "Kreditkeret",
   "Kontingent aufgebraucht.": "Elfogyott a kreditkeret.",
+  "    noch keine": "    Még nincs",
+  "✓ Das hast du schon erledigt.": "✓ Ezt már elvégezted.",
 })
 
 # Disabled-page messages from NavShell and MainWindow; the page label
