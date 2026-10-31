@@ -102,6 +102,25 @@ def main() -> None:
         ),
     ])
 
+    # The original project's version checker points to an upstream German
+    # EXE with a different filename. In the HU fork check OUR releases and
+    # look for our EXE asset. Keep the original project credit/constants
+    # unchanged for upstream attribution/self-test compatibility.
+    # NOTE: GitHub returns 404 for unauthenticated private Releases; users
+    # can open the latest release in their signed-in browser.
+    patch("dreamevoice/aktualisierung.py", [
+        (
+            'def pruefen(timeout: int = 12,\n'
+            '            projekt_url: str = PROJEKT_URL) -> Optional[Neuerung]:',
+            'def pruefen(timeout: int = 12,\n'
+            '            projekt_url: str = "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU") -> Optional[Neuerung]:',
+        ),
+        (
+            'if str(d.get("name") or "").lower() == EXE_NAME.lower()),',
+            'if str(d.get("name") or "").lower() == "dreamesprachpaket-hu.exe"),',
+        ),
+    ])
+
     patch("dreamevoice/tts.py", [
         (
             "def pick_german_voice(preferred: str = \"\") -> Optional[Voice]:",
