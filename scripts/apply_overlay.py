@@ -497,7 +497,7 @@ def main() -> None:
             '                   text="Kész magyar hang letöltése",\n'
             '                   command=lambda: webbrowser.open(\n'
             '                       "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/"\n'
-            '                       "releases/tag/v1.4.0-hu.8")).pack(side="left")\n'
+            '                       "releases/latest")).pack(side="left")\n'
             '        ttk.Button(hu_actions,\n'
             '                   text="Letöltött hangok importálása",\n'
             '                   style="Small.TButton",\n'
