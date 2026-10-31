@@ -504,6 +504,34 @@ _DYNAMIC.extend((re.compile(a), b) for a, b in [
      r"\1 / \2 bemondás megjelenítve"),
 ])
 
+
+_TRANSLATIONS.update({
+  "IN DER APP ENTHALTEN": "BEÉPÍTETT HANGOK",
+  "EIGENE": "SAJÁT HANGOK",
+  "FREIE STIMMEN AUS DEM NETZ": "LETÖLTHETŐ HANGOK",
+  "In der App enthalten": "Beépített hangok",
+  "Eigene": "Saját hangok",
+  "Freie Stimmen aus dem Netz": "Internetről letölthető hangok",
+  "Eigenes · ": "Saját · ",
+  "Mitgelieferte Dialekte lassen sich nicht umbenennen.": "A beépített beszédstílusok nem nevezhetők át.",
+  "Mitgelieferte Dialekte lassen sich nicht löschen.": "A beépített beszédstílusok nem törölhetők.",
+  "Wähle oben ein Paket aus, das mit 'Eigenes' beginnt.": "Fent válassz ki egy „Saját” kezdetű hangcsomagot.",
+  "Eigene Textsammlung": "Saját szövegcsomag",
+  "Eigene Textsammlung anlegen ...": "Saját szövegcsomag létrehozása…",
+  "nicht verfügbar": "nem érhető el",
+  "Im Projekt enthalten": "A projekt része",
+  "Heruntergeladen": "Letöltve",
+  "Bereits heruntergeladen": "Már le van töltve",
+  "Noch kein Paket": "Még nincs hangcsomag",
+  "Status unbekannt": "Ismeretlen állapot",
+  "Abspielen": "Lejátszás",
+  "Öffne im Browser": "Megnyitás böngészőben",
+  "Sehe nach ...": "Ellenőrzés…",
+  "Verbinde ...": "Csatlakozás…",
+  "Kontingent": "Kreditkeret",
+  "Kontingent aufgebraucht.": "Elfogyott a kreditkeret.",
+})
+
 def translate(value):
     """Translate only UI-visible text, preserving technical identifiers."""
     if not isinstance(value, str) or not value:
