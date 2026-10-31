@@ -172,6 +172,44 @@ def main() -> None:
         ),
     ])
 
+    # A restricted ElevenLabs key can allow speech+voice listing but deny
+    # GET /user/subscription (401/403). Do not require account-wide access
+    # merely to synthesize a voice pack; listing voices validates the key.
+    patch("dreamevoice/ui/tab_store.py", [
+        (
+            '            quota = elevenlabs.check_key(key)\n'
+            '            voices = elevenlabs.list_voices(key)',
+            '            try:\n'
+            '                quota = elevenlabs.check_key(key)\n'
+            '            except Exception:\n'
+            '                quota = None  # Restricted key: quota endpoint denied.\n'
+            '            voices = elevenlabs.list_voices(key)',
+        ),
+        (
+            '            enough = quota.left >= needed\n'
+            '            self.lbl_eleven.configure(\n'
+            '                text=(f"   Verbunden. Kontingent: {quota.describe()}. "\n'
+            '                      f"Für {wofuer} werden rund {needed} Zeichen "\n'
+            '                      f"gebraucht - " +\n'
+            '                      ("das reicht." if enough else "das reicht derzeit nicht.")),\n'
+            '                style="Success.TLabel" if enough else "Warning.TLabel")',
+            '            if quota is None:\n'
+            '                self.lbl_eleven.configure(\n'
+            '                    text=(f"   Verbunden. Kontingent mit eingeschränktem "\n'
+            '                          f"API-Schlüssel nicht auslesbar. "\n'
+            '                          f"Für {wofuer} werden rund {needed} Zeichen benötigt."),\n'
+            '                    style="Success.TLabel")\n'
+            '            else:\n'
+            '                enough = quota.left >= needed\n'
+            '                self.lbl_eleven.configure(\n'
+            '                    text=(f"   Verbunden. Kontingent: {quota.describe()}. "\n'
+            '                          f"Für {wofuer} werden rund {needed} Zeichen "\n'
+            '                          f"gebraucht - " +\n'
+            '                          ("das reicht." if enough else "das reicht derzeit nicht.")),\n'
+            '                    style="Success.TLabel" if enough else "Warning.TLabel")',
+        ),
+    ])
+
     # This call occurs in 4 guard locations as well as the voice combobox.
     path = ROOT / "dreamevoice/ui/tab_store.py"
     s = path.read_text(encoding="utf-8-sig")
