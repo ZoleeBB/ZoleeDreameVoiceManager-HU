@@ -319,19 +319,50 @@ _TRANSLATIONS.update({
   "Die Stimme einer real existierenden Person nachzubilden": "Valós személy hangjának utánzása"
 })
 
+_DYNAMIC = [
+    (r"^Schritt (\d+) von (\d+)$", r"\1. lépés / \2"),
+    (r"^Weitere (\d+) anzeigen$", r"További \1 megjelenítése"),
+    (r"^(\d+) von (\d+) Ansagen zugewiesen$", r"\1 / \2 bemondás hozzárendelve"),
+    (r"^(\d+) Ansagen$", r"\1 bemondás"),
+    (r"^(\d+) von (\d+) Ansagen gesprochen$", r"\1 / \2 bemondás elkészült"),
+    (r"^(\d+) Ansagen angehört\.", r"\1 bemondás meghallgatva."),
+    (r"^Version (.+) ist da\.?$", r"Elérhető a(z) \1 verzió."),
+    (r"^Version (.+) ist bereit\.?$", r"A(z) \1 verzió készen áll."),
+    (r"^(\d+) Dialekte zum Selbersprechen", r"\1 választható beszédstílus"),
+    (r"^Angemeldet \(([^)]+)\)$", r"Bejelentkezve (\1)"),
+    (r"^Lade ffmpeg herunter \(etwa (\d+) MB\) \.\.\.$",
+     r"FFmpeg letöltése (kb. \1 MB)…"),
+    (r"^Lade (.+) \.\.\.$", r"\1 letöltése…"),
+    (r"^Zwischenstand: (\d+) von (\d+) Ansagen gesprochen",
+     r"Állapot: \1 / \2 bemondás elkészült"),
+    (r"^Kostprobe fertig - (\d+) Sätze$",
+     r"Hangminta elkészült – \1 mondat"),
+    (r"^Bereit: (.+) \((\d+) KB\)$",
+     r"Készen áll: \1 (\2 KB)"),
+    (r"^(.+) ist die neueste Fassung\.$",
+     r"A(z) \1 a legfrissebb verzió."),
+]
+_DYNAMIC = [(re.compile(pattern), replacement) for pattern, replacement in _DYNAMIC]
+
+
 def translate(value):
-    """Translate UI-visible German strings; leave unrecognized data untouched."""
+    """Translate only UI-visible text, preserving technical identifiers."""
     if not isinstance(value, str) or not value:
         return value
-    if value in _TRANSLATIONS:
-        return _TRANSLATIONS[value]
-    # Preserve user input and variable machine identifiers. Only substitute
-    # presentation phrases, never arbitrary character patterns.
+    exact = _TRANSLATIONS.get(value)
+    if exact is not None:
+        return exact
+    for pattern, replacement in _DYNAMIC:
+        if pattern.search(value):
+            return pattern.sub(replacement, value)
+    # German source constructs some paragraphs by joining string fragments
+    # and dynamic identifiers. Only replace known presentation phrases.
     result = value
     for de, hu in _TRANSLATIONS.items():
-        if len(de) > 12 and de in result and not any(c in de for c in ("\\n", "\\t")):
+        if len(de) > 12 and de in result:
             result = result.replace(de, hu)
     return result
+
 
 
 def enable():
