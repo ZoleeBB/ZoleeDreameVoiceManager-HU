@@ -365,6 +365,78 @@ def translate(value):
 
 
 
+HELP_TEXT_HU = """\
+A GYORS KEZDÉS
+
+A Dreame Voice Manager HU segítségével saját magyar hangot adhatsz a robotporszívódnak. A használathoz elsősorban két oldalra van szükség:
+
+1. Kezdőlap
+   Jelentkezz be ugyanazzal a Dreamehome-, MOVA Home- vagy Trouver-fiókkal, amelyet a telefonodon használsz. A program letölti a robotod gyári hangcsomagját, amely az új hangok alapja. A gyári csomagot csak egyszer kell letölteni.
+
+2. Kész hangok
+   Válassz ki egy hangot, hallgasd meg a próbát, majd a „Telepítés a robotra” gombbal telepítsd. Az egyéni hang azonosítója CUSTOM. A gyári hang ettől nem törlődik.
+
+A Haladó részben további funkciók találhatók:
+- Hangfelvételek importálása: saját vagy letöltött MP3-, WAV-, OGG- és ZIP-felvételek feldolgozása.
+- Hangcsomag készítése: egyedi bemondások és saját hangstílus előállítása Windows-felolvasással vagy ElevenLabs segítségével.
+- Beállítások: fiók, robot, hálózat, megjelenés és frissítés.
+
+A szürke menüpontok nem hibásak: előbb jelentkezz be, és töltsd le a gyári hangot.
+
+
+BIZTONSÁG ÉS VISSZAÁLLÍTÁS
+
+- A program nem módosítja a robot firmware-ét.
+- Az egyéni hangcsomag a gyári hangcsomag másolata. Csak a kiválasztott felvételeket cseréli le, a többi hang és vezérlőfájl megmarad.
+- A robot ellenőrzi a letöltendő csomag méretét és ellenőrzőösszegét.
+- A „Gyári hang visszaállítása” gombbal bármikor visszaállítható az eredeti hang.
+- A telepítés nem hivatalos: a felhasználó saját felelősségére történik.
+
+
+MIÉRT NEM JELENIK MEG AZ EGYÉNI HANG A DREAMEHOME ALKALMAZÁSBAN?
+
+A telefonos alkalmazás csak a Dreame saját hangkatalógusát mutatja. A CUSTOM azonosítójú hang ezért nem jelenik meg a listában. Ha a Dreamehome eltérő nyelvi beállítást jelez, az önmagában nem telepítési hiba.
+
+Fontos: ne válassz új hangot a telefonos Dreamehome alkalmazásban, amíg a saját hangodat szeretnéd használni, mert ezzel felülírhatod. Az aktuális robot-hang a Kezdőlapon ellenőrizhető.
+
+
+HA A ROBOT NEM TUDJA LETÖLTENI A CSOMAGOT
+
+A robotnak el kell érnie a számítógépet a helyi hálózaton:
+- Engedélyezd a programot a Windows tűzfalában a privát hálózaton.
+- A robot és a számítógép legyen egymás számára elérhető hálózaton; az elszigetelt vendég- vagy IoT-Wi-Fi ezt akadályozhatja.
+- Az aktív VPN megzavarhatja a kapcsolatot.
+- A robot legyen ébren.
+- Ha helyben nem sikerül, a Beállítások → Egyéni URL mezőben külső, közvetlenül letölthető URL is használható.
+
+
+MAGYAR HANGCSOMAG ÉS ELEVENLABS
+
+A „Magyar – Vicces házimunkás” a saját szerkeszthető magyar szövegcsomagunk. A szövegeket egyenként módosíthatod, majd hangmintát készíthetsz belőlük.
+
+Windows: offline és ingyenes, telepített magyar Windows-felolvasóhang esetén magyar kiejtéssel.
+
+ElevenLabs: internetkapcsolat és saját API-kulcs szükséges. Magyar szöveghez magyarul beszélő hangot és magyar nyelvet támogató modellt használj (például eleven_flash_v2_5). A hanggenerálás a fiókod kreditkeretéből fogyaszt. Az API-kulcsot csak a helyi alkalmazásban add meg, GitHubra ne töltsd fel.
+
+A kész hangfájlokat a program tárolja, így a generálás folytatható. A robotnak az ElevenLabs-ra nincs szüksége: a kész hangcsomagot helyben játssza le.
+
+
+HANGFÁJLOK ÉS FFmpeg
+
+A robot OGG Vorbis, mono, 16 kHz formátumú felvételeket vár. A program a támogatott más formátumokat FFmpeg segítségével átalakítja. A saját HU EXE tartalmazza az ellenőrzött FFmpeg-komponenst.
+
+A bemondások legyenek rövidek, hogy jól illeszkedjenek a robot eredeti visszajelzéseinek hosszához.
+"""
+
+HAFTUNG_HU = """\
+Magáncélú, nyílt forráskódú szabadidős projekt. A szoftvert bármiféle jótállás vagy szavatosság nélkül biztosítjuk; használata a felhasználó saját felelősségére és kockázatára történik. A jogszabályok által megengedett mértékig nem vállalunk felelősséget a robotban, a dokkolóállomásban, az adatokban vagy más vagyontárgyakban okozott károkért.
+
+Ez a projekt nem áll kapcsolatban a Dreame, MOVA, Trouver vagy Xiaomi cégekkel, és egyik gyártó sem támogatja, ellenőrizte vagy hagyta jóvá. A védjegyek és terméknevek a megfelelő jogosultak tulajdonát képezik.
+
+A saját hangcsomagok használata eltérhet a gyártó által meghatározott rendeltetésszerű használattól. Az esetleges garanciális vagy szavatossági következményekről kizárólag az érintett gyártó dönthet.
+"""
+
+
 def enable():
     """Install presentation-only hooks once before the first GUI is created."""
     import tkinter as tk
