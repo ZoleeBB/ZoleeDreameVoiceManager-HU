@@ -7,6 +7,7 @@ environment mismatches. ANY new failure fails CI.
 """
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -28,10 +29,16 @@ EXPECTED_CI_ONLY = {
 
 
 def main() -> int:
+    # GitHub's Windows PowerShell runner can default to cp1252.
+    # Selftest contains accented German output, so force UTF-8 end-to-end.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    environment = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     result = subprocess.run(
         [sys.executable, "selftest.py"],
         check=False,
         capture_output=True,
+        env=environment,
     )
     output = result.stdout.decode("utf-8", errors="replace")
     errors = result.stderr.decode("utf-8", errors="replace")
