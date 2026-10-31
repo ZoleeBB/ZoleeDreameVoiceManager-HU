@@ -27,6 +27,37 @@ class HungarianUiTests(unittest.TestCase):
         for s in ("Anmelden", "Fertige Stimmen", "Wirklich löschen?"):
             self.assertEqual(translate(translate(s)), translate(s))
 
+    def test_new_translation_coverage(self):
+        self.assertEqual(translate("ElevenLabs - echte Dialektaussprache"),
+                         "ElevenLabs – természetes magyar kiejtés")
+        self.assertEqual(translate("Text kopieren"), "Szöveg másolása")
+        self.assertEqual(translate("Auf Standard zurücksetzen"),
+                         "Alapértelmezett szövegek visszaállítása")
+        self.assertEqual(translate("Revolut-me támogatás"),
+                         "Revolut-me támogatás")
+        self.assertEqual(translate("Webserver beendet."),
+                         "A helyi webszerver leállt.")
+
+    def test_hungarian_progress_logs(self):
+        self.assertEqual(
+            translate("Erzeuge Dialektpaket: Magyar – Vicces házimunkás"),
+            "Magyar hangcsomag készítése: Magyar – Vicces házimunkás")
+        self.assertEqual(
+            translate("Spreche 181 von 181 Ansagen auf Magyar – Vicces házimunkás ..."),
+            "181 / 181 bemondás generálása: Magyar – Vicces házimunkás…")
+        self.assertIn("23 / 181",
+            translate("Kontingent aufgebraucht nach 23 von 181 Ansagen."))
+        self.assertEqual(
+            translate("Warte bis zu 120 Sekunden auf den Download ..."),
+            "Legfeljebb 120 másodpercig várok a robot letöltésére…")
+
+    def test_machine_data_preserved_in_mixed_logs(self):
+        self.assertIn(
+            "Magyar_HU_Elison_2.tar.gz",
+            translate("Paket:  Magyar_HU_Elison_2.tar.gz"))
+        self.assertIn("eleven_flash_v2_5",
+                      translate("eleven_flash_v2_5"))
+
     def test_static_widget_text_coverage_report(self):
         """Report untranslated static German labels without touching runtime data."""
         import ast
