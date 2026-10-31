@@ -475,6 +475,22 @@ def main() -> None:
         ),
     ])
 
+    # The dialect combobox uses internal display strings to map back to the
+    # selected object, so translate its PREFIX CONSTANTS instead of applying
+    # a generic Combobox.values translation that could corrupt selection.
+    patch("dreamevoice/ui/tab_store.py", [
+        (
+            '    VORSATZ_DIALEKT = "Dialekt · "\n'
+            '    #: Hinweis an Dialekten, die der App schon fertig beiliegen.\n'
+            '    ZUSATZ_FERTIG = "  (liegt fertig bei)"\n'
+            '    VORSATZ_EIGEN = "Eigenes · "',
+            '    VORSATZ_DIALEKT = "Beszédstílus · "\n'
+            '    #: Hinweis an Dialekten, die der App schon fertig beiliegen.\n'
+            '    ZUSATZ_FERTIG = "  (kész hang elérhető)"\n'
+            '    VORSATZ_EIGEN = "Saját · "',
+        ),
+    ])
+
     # Make the one-time generated Hungarian audio discoverable from the
     # "Kész hangok" page. This opens the private GitHub release in a browser;
     # the user can download the ZIP (GitHub login may be required), then
