@@ -282,6 +282,43 @@ _TRANSLATIONS = {
   "Sonstiges": "Egyéb"
 }
 
+_TRANSLATIONS.update({
+  "Eigene Stimmen für Dreame-Saugroboter - entwickelt und geprüft am X50 Ultra Complete": "Saját hangok Dreame robotporszívókhoz – Dreame X50 Ultra Complete modellen fejlesztve és ellenőrizve.",
+  "Dieselben Zugangsdaten wie in deiner Handy-App": "Ugyanazokat az adatokat add meg, mint a telefonos alkalmazásban.",
+  "Die Daten gehen ausschließlich an Dreame und werden im Windows-Tresor abgelegt, nicht in einer Datei. Es gibt kein Konto bei diesem Programm und keine Weitergabe an Dritte.": "A bejelentkezési adatokat kizárólag a Dreame kapja meg; a jelszót a Windows hitelesítőadat-tárolója védi. Ez a program nem hoz létre külön fiókot, és nem adja tovább az adatokat.",
+  "Das offizielle Sprachpaket wird geholt": "A gyári hangcsomag letöltése folyamatban.",
+  "Jedes eigene Paket entsteht als Kopie des offiziellen - nur so bleibt keine Ansage auf der Strecke. Deshalb wird es einmalig heruntergeladen und danach wiederverwendet.": "A saját hangcsomag a gyári csomagra épül, ezért nem tűnnek el a hiányzó bemondások. A gyári csomagot egyszer letöltjük, később újra felhasználjuk.",
+  "Aussuchen, anhören, aufspielen - für jede Stimme gleich. Jede landet an derselben Stelle im Roboter und ersetzt die vorige.": "Válaszd ki a hangot, hallgasd meg, majd telepítsd a robotra. Az új hang mindig az előző egyéni hang helyére kerül.",
+  "Jede neue Stimme ersetzt die vorige. Die Werksstimme wird dabei nicht gelöscht - ein Klick auf der Startseite („Originalstimme wiederherstellen“) holt sie zurück.": "Minden új hang lecseréli a korábbi egyéni hangot. A gyári hang nem törlődik: a Kezdőlapon a „Gyári hang visszaállítása” gombbal bármikor visszaállítható.",
+  "Dafür müssen dieser PC und der Roboter im selben Netz hängen - kein Gast- oder IoT-WLAN - und die Windows-Firewall muss die App ins private Netzwerk lassen. Klappt das nicht, hilft „Eigene URL“ unter „Einstellungen“.": "A számítógépnek és a robotnak ugyanazon a helyi hálózaton kell lennie, és a Windows tűzfalának engedélyeznie kell a programot a privát hálózaton. Ha ez nem működik, a Beállítások → Egyéni URL segíthet.",
+  "Aufnahmen, die du schon hast - selbst gesprochen oder heruntergeladen - werden zu einer Stimme für deinen Roboter. Das fertige Paket steht danach unter „Fertige Stimmen“.": "A saját vagy letöltött hangfelvételekből a robothoz használható hangcsomagot állíthatsz össze. Az elkészült csomag a „Kész hangok” oldalon lesz elérhető.",
+  "Die App spricht die Ansagen selbst - in einem Dialekt deiner Wahl. Das fertige Paket steht danach unter „Fertige Stimmen“.": "A program a kiválasztott hanggal felolvassa a bemondásokat és hangcsomagot készít. Az eredmény a „Kész hangok” oldalon jelenik meg.",
+  "Fertig gesprochene Ansagen - ganze Sätze auf einmal oder Ansage für Ansage.": "Kész felvételek importálása egyszerre vagy bemondásonként.",
+  "'Aufnahmen oder Paket einlesen' nimmt einen ganzen Satz entgegen: eine ZIP-Datei mit Aufnahmen, ein fertiges .tar.gz-Sprachpaket oder einen Ordner voller mp3-, wav- oder ogg-Dateien. Die Zahl im Dateinamen ist die Ansage-Nummer. Fremde Pakete werden vorher geprüft.\n\n'Ansagen einzeln austauschen' öffnet die Liste aller Ansagen: anhören, eine eigene Datei zuweisen, fertig. Aus den Zuweisungen baut dieselbe Schaltfläche dort das Paket.\n\nBeides landet als fertiges Paket in deiner Sammlung und steht danach unter „Fertige Stimmen“ zum Aufspielen bereit.": "A „Hangfelvételek vagy csomag importálása” gomb ZIP-archívumot, kész .tar.gz hangcsomagot vagy MP3-, WAV-, OGG-fájlokat tartalmazó mappát fogad. A fájlnévben lévő szám a bemondás azonosítója. Az idegen hangcsomagokat importálás előtt ellenőrizzük.\n\nA „Bemondások egyenkénti cseréje” gombbal meghallgathatod a gyári hangokat, és külön fájlokat rendelhetsz hozzájuk. Ezekből is készíthető teljes csomag.\n\nAz elkészült hangokat a „Kész hangok” oldalon tudod telepíteni a robotra.",
+  "Die App hat die Ansagen im jeweiligen Dialekt aufgeschrieben und lässt sie hier sprechen. Mit der Windows-Stimme läuft das offline und kostenlos, klingt aber nach Hochdeutsch; für echten Dialekt in der Aussprache lässt sich auf ElevenLabs umschalten (eigenes Konto).": "A program előkészíti a bemondások szövegét, és a kiválasztott hanggal felolvastatja. A Windows-felolvasás ingyenes és offline; természetesebb magyar kiejtéshez az ElevenLabs is választható (saját fiókkal).",
+  "Unter 'Eigene Textsammlung anlegen' entstehen eigene Texte - etwa im Stil einer Filmfigur. Sie verhält sich wie ein Dialekt: anhören, Texte ändern, mit jeder Stimme erzeugen, nach aufgebrauchtem Kontingent fortsetzen.": "A „Saját szövegcsomag létrehozása” funkcióval saját karaktert készíthetsz. Szerkesztheted, meghallgathatod és bármely támogatott hanggal legenerálhatod; elfogyott keret esetén később folytathatod.",
+  "Die Kostprobe spricht drei Sätze mit der gerade gewählten Stimme und spielt sie ab - so hörst du vorher, ob dir das Ergebnis gefällt. Bei ElevenLabs kostet sie gut 100 Zeichen aus dem Monatskontingent.\nUnter 'Texte ansehen und ändern' kannst du jede Ansage umformulieren. Deine Fassung bleibt gespeichert; bereits gesprochene Aufnahmen geänderter Ansagen werden verworfen und beim nächsten Erzeugen neu aufgenommen.\nFür größere Überarbeitungen liegt jeder Dialekt auch als Textdatei im Datenordner: kopieren, von einer Sprach-KI verbessern lassen, zurück in die Datei einfügen und wieder einlesen.": "A hangpróba három mondatot olvas fel a kiválasztott hanggal. ElevenLabs használatakor ez kreditet fogyaszt.\nA „Szövegek megtekintése és szerkesztése” gombbal bármely bemondást átírhatod. A módosítások megmaradnak; csak a megváltoztatott bemondások hangját kell újragenerálni.\nNagyobb szerkesztéshez a szövegek fájlba exportálhatók, majd módosítás után visszaimportálhatók.",
+  "Noch keine Roboter geladen - melde dich oben an.": "Még nem töltöttünk be robotokat. Előbb jelentkezz be!",
+  "Die App selbst, dein Konto, der Roboter und das Netz.": "Az alkalmazás, a fiók, a robot és a hálózat beállításai.",
+  "(nur unter Windows verfügbar)": "(csak Windows alatt érhető el)",
+  "(verschlüsselt mit deinem Windows-Konto)": "(a Windows-fiókoddal titkosítva)",
+  "Die ausführlichen Anleitungen liegen im Ordner": "A részletes útmutatók a mappában találhatók:",
+  "Öffnet sich im Browser.": "Böngészőben nyílik meg.",
+  "Freiwillig, ohne Gegenleistung - die App bleibt": "A támogatás önkéntes, ellenszolgáltatás nélkül. Az alkalmazás továbbra is",
+  "Erweitert": "Haladó",
+  "Dialekte zum Selbersprechen": "Választható beszédstílusok",
+  "zum Selbersprechen": "saját hanggeneráláshoz",
+  "Keine deutsche oder ungarische Sprachausgabe installiert.": "Nincs telepített német vagy magyar Windows-felolvasóhang.",
+  "Kein kompatibles Modell vorhanden": "Nincs megfelelő modell",
+  "Keine bayerische Stimme": "Nem bajor hang",
+  "Bitte von Hand nachhelfen": "Kézi beavatkozás szükséges",
+  "Kein Roboter gefunden": "Nem található robot",
+  "Bei den Aufnahmen": "A hangfelvételekben",
+  "Einen Moment warten und erneut versuchen.": "Várj egy kicsit, majd próbáld újra.",
+  "Die Originalstimme bleibt unberührt": "A gyári hang megmarad",
+  "Die Stimme einer real existierenden Person nachzubilden": "Valós személy hangjának utánzása"
+})
+
 def translate(value):
     """Translate UI-visible German strings; leave unrecognized data untouched."""
     if not isinstance(value, str) or not value:
