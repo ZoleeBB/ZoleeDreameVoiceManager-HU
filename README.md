@@ -13,7 +13,7 @@ A kész Elison-hangok **589 magyar bemondást** tartalmaznak. **Nem kell hozzá 
 - **`Zolee_Dreame_HU_Elison_589_OGG.zip`** — ajánlott, modellhez igazítható, gyári hangoktól mentes 589 magyar OGG.
 - **`Zolee_Dreame_X50_HU_Elison_Ready.tar.gz`** — X50 Ultra Complete modellhez teljes, 611 hangos csomag; gyári eredeti hangokat is tartalmaz, ezért csak privát körben terjeszthető a jogok tisztázásáig.
 
-Az Actions pipeline az ellenőrzőösszeget és a teljes archívumtartalmat validálja, csak azután hozza létre vagy frissíti a Release-assets listáját. **Ha a fájlok nincsenek a repóban, a Release szándékosan meghiúsul**, nehogy hiányos letöltést kínáljon. Az első, egyszeri feltöltés után nincs több kézi Release-csatolás.
+Az Actions pipeline az ellenőrzőösszeget és a teljes archívumtartalmat validálja, csak azután hozza létre vagy frissíti a Release-assets listáját. **Ha a fájlok nincsenek a repóban, a Release szándékosan meghiúsul**, nehogy hiányos letöltést kínáljon. A hangarchívumok már a `voicepacks/assets/` könyvtárban vannak. Az első, egyszeri feltöltés után nincs több kézi Release-csatolás.
 
 [**Részletes hangcsomag-telepítési útmutató**](voicepacks/README.md) · [**Egyszeri feltöltés helye**](voicepacks/assets/README.md) · [**Releases**](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases)
 
@@ -24,7 +24,7 @@ A Dreame Voice Managerben a **Kész hangok** oldalról nyisd meg a **Kész magya
 
 **Az előre elkészített hangcsomag használata:**
 
-1. A Release **Assets** részéből töltsd le a `Zolee_Dreame_HU_Elison_589_OGG.zip` fájlt. **Ne csomagold ki!** Ha a ZIP nincs még az Assets között, a feltöltése még hátravan.
+1. A Release **Assets** részéből töltsd le a `Zolee_Dreame_HU_Elison_589_OGG.zip` fájlt. **Ne csomagold ki!** Az aktuális GitHub Release-hez a pipeline automatikusan csatolja az archívumot.
 2. A programban jelentkezz be a Dreamehome-fiókba, és töltsd le a robothoz tartozó eredeti hangcsomagot a **Start** oldalon.
 3. A **Hangfelvételek importálása** oldalon importáld a ZIP-et. A program helyben készít robot-kompatibilis csomagot, az eredeti hangok meghagyásával.
 4. A **Kész hangok** oldalon hallgasd meg, majd telepítsd a magyar hangot a robotra.
@@ -35,13 +35,13 @@ A Dreame Voice Managerben a **Kész hangok** oldalról nyisd meg a **Kész magya
 
 [**Részletes útmutató, SHA-256 ellenőrzés és modellkompatibilitás**](voicepacks/README.md) · [**Hangcsomag manifest**](voicepacks/elison-20261031.json)
 
-> A repó jelenleg privát. A letöltéshez GitHub-hozzáférés szükséges. A kész ZIP Release-be történő feltöltése külön lépés; a README nem állítja, hogy már megjelent, amíg az Assets alatt ténylegesen nem látható.
+> A repó jelenleg privát. A letöltéshez GitHub-hozzáférés szükséges. A Release-assetek elérhetőségét a GitHub kiadási oldalán tudod ellenőrizni.
 
 ---
 
 **Alap:** [Anon365-Project/dreame-sprachpaket-manager](https://github.com/Anon365-Project/dreame-sprachpaket-manager), **v1.4.0**. Az eredeti forrás MIT-licenc alatt áll. Az eredeti LICENSE és szerzői információk változatlanul megmaradnak. Az eredeti német hanganyagok ettől független, saját felhasználási feltételek alá esnek; a saját HU build nem csomagolja őket.
 
-## Végleges magyar alapszövegek (v1.4.0-hu.8)
+## Végleges magyar alapszövegek (v1.5.0)
 
 A programba bekerült a felhasználó 2026. október 31-én átadott, kézzel szerkesztett `magyar_vicces_vegleges.json` állományának **mind a 589 magyar szövege**. A `dreamevoice/hu_preset.py` `TEXTS` szótára a teljes, jóváhagyott szövegkészletet tartalmazza, ID és szöveg szerint 1:1-ben; a korábbi 181 bemondásos kezdő csomag megszűnt alapértelmezettnek lenni. A Dreame X50 Ultra Complete eredeti hangcsomagjának 611 fájljából így 589 ID kapott magyar szöveget (**96,4%**); 22, még be nem azonosított hang változatlanul gyári hang marad. Az 589 szöveghez az Elison hanggal **külön előre elkészített OGG ZIP** is rendelkezésre áll, amelyet a felhasználó TTS-generálás nélkül importálhat; az EXE fájlba azonban nem ágyazunk be hanganyagokat.
 
@@ -76,9 +76,17 @@ Forrás: [az upstream részletes modellkompatibilitási dokumentációja](https:
 
 ## Magyar nyelvű felület és a támogatási lehetőségek
 
-A Ko-fi és **Revolut-me támogatás** a README bannerének közvetlenül alatta, gombként jelenik meg. A programban a **fejléc állandó részei** a Ko-fi és Revolut-támogatási hivatkozások, így a Kezdőlap, Kész hangok, importálás, hanggenerálás és Beállítások oldalakon egyaránt elérhetők.
+A Ko-fi és **Revolut-me támogatás** a README bannerének közvetlenül alatta, gombként jelenik meg. A programban a minden oldalon látható, külön **Támogatás** sáv gombjai a Ko-fi és Revolut-me hivatkozások, így a Kezdőlap, Kész hangok, importálás, hanggenerálás és Beállítások oldalakon egyaránt elérhetők.
 
 A felület Tkinter-szövegeit, a megerősítő ablakokat, az ElevenLabs-hangválasztó beállításait, valamint a generálási/importálási/telepítési folyamat ismert naplóüzeneteit a `dreamevoice/ui_hu.py` fordítja. A fordítóréteg csak **megjelenített szöveget** változtat; robotazonosítót, fájlnevet, API-kulcsot és hangcsomagot nem. A hibák külső szolgáltatásoktól érkező, új üzenetei esetenként továbbra is idegen nyelvűek lehetnek.
+
+## Verziószámozás és kiadások
+
+2026. október 31-től a magyar változat szabványos **`vMAJOR.MINOR.PATCH`** verziókat használ. A következő kiadás **`v1.5.0`**, az utána következő javítókiadás **`v1.5.1`**. A korábbi `v1.4.0-hu.N` formátumot új kiadásoknál nem használjuk, a régi kiadások viszont történeti okból megmaradnak.
+
+A verzió egyetlen forrása a `VERSION-HU`. A `scripts/set_release_version.py` minden fordításkor ebből állítja elő a programban látható verziót, az EXE Windows fájltulajdonságait és a kiadási jegyzetek fejlécét. A `release.yml` ugyanezen a verziónév alatt publikálja az EXE-t és a két előre generált hangcsomagot.
+
+**A támogatási gombok megjelenése:** a Windows programban a **Támogatás** sáv közvetlenül a főfejléc alatt van, a teljes felületen, a Kezdőlapon és az összes másik oldalon is. A Ko-fi és a Revolut-me gomb egy kattintással a megfelelő támogatási oldalra vezet. A README két saját SVG-gombja egyaránt **230 × 42 pixel**.
 
 ## Jelenlegi felépítés és CI/CD
 
@@ -89,7 +97,7 @@ Ez szándékos: az upstream forrás nem kell még egyszer a repóba, és a magya
 **Teendők:**
 1. Merge előtt a PR-nél ellenőrizd a `Dreame HU - Windows Build` eredményét.
 2. A sikeres build `DreameVoiceManager-HU` artifactja 7 napig tölthető le.
-3. A PR sikeres ellenőrzését követően a `main`-be merge-elt `VERSION-HU` fájl automatikusan elindítja az első Release workflow-t (`v1.4.0-hu.1`). A build tesztel, majd a Releases felületre feltölti az EXE-t és az ellenőrzőösszeget. Későbbi kiadáshoz módosítsd a `VERSION-HU` értékét, és egyesítsd a `main`-be; szükség esetén a workflow kézzel is indítható.
+3. A PR sikeres ellenőrzését követően a `main`-be merge-elt `VERSION-HU` fájl automatikusan elindítja az első Release workflow-t (`v1.5.0`). A build tesztel, majd a Releases felületre feltölti az EXE-t és az ellenőrzőösszeget. Későbbi kiadáshoz módosítsd a `VERSION-HU` értékét, és egyesítsd a `main`-be; szükség esetén a workflow kézzel is indítható.
 4. A Windows EXE nem aláírt. Indítás után ellenőrizd a magyar TTS-hangot és hallgasd meg az egyes bemondásokat a robotra telepítés előtt.
 
 **CI megjegyzés:** az upstream `selftest.py` minden tesztjét lefuttatjuk, de a GitHub runnerén hiányzó, külön kiadott hat német hangarchívumhoz és az AMSI környezetéhez kapcsolódó, név szerint felsorolt 12 eltérés nem blokkolja a buildet. Bármely egyéb sikertelen upstream teszt hibának számít. A magyar regressziós tesztek mindig kötelezőek.
@@ -103,7 +111,7 @@ A régi `setup-private-repo.ps1` csak egy **új, üres** repository egyszeri lé
 - CI: `.github/workflows/build.yml` — `main`, `develop`, PR és kézi indítás.
 - Release: `.github/workflows/release.yml` — `v*` tageknél létrehozza a release-t, feltölti az EXE-t és a SHA-256 ellenőrzőösszeget.
 - Python 3.12, `windows-2022`, PyInstaller és requests verzió pinelve a `requirements-hu-build.txt` fájlban.
-- FFmpeg letöltés csak előzetesen rögzített SHA-256 ellenőrzéssel történik. A BtbN `latest` hivatkozása időközben megváltozhat: ebben az esetben a build biztonságosan leáll, és kézi ellenőrzés/új SHA szükséges a `scripts/build-release.ps1` fájlban.
+- FFmpeg letöltés csak előzetesen rögzített SHA-256 ellenőrzéssel történik. A BtbN meghatározott, változatlan kiadásához kötött URL és SHA-256 ellenőrzés védi a buildet; kézi ellenőrzés/új SHA szükséges a `scripts/build-release.ps1` fájlban.
 - A magyar EXE neve `DreameSprachpaket-HU.exe`. Ez a saját build nem frissíti magát az eredeti projekt aláíratlan EXE-jére. A frissítések a saját GitHub Releases felületről tölthetők le.
 - Nem használ GitHub secretet a Dreame-bejelentkezéshez; a jelszó csak helyben, az alkalmazásba kerülhet.
 
