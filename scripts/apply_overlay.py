@@ -110,14 +110,14 @@ def main() -> None:
     # can open the latest release in their signed-in browser.
     patch("dreamevoice/aktualisierung.py", [
         (
+            'EXE_NAME = "DreameSprachpaket.exe"',
+            'EXE_NAME = "DreameSprachpaket-HU.exe"',
+        ),
+        (
             'def pruefen(timeout: int = 12,\n'
             '            projekt_url: str = PROJEKT_URL) -> Optional[Neuerung]:',
             'def pruefen(timeout: int = 12,\n'
             '            projekt_url: str = "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU") -> Optional[Neuerung]:',
-        ),
-        (
-            'if str(d.get("name") or "").lower() == EXE_NAME.lower()),',
-            'if str(d.get("name") or "").lower() == "dreamesprachpaket-hu.exe"),',
         ),
     ])
 
@@ -584,16 +584,10 @@ def main() -> None:
         path.write_text(s, encoding="utf-8")
         print("Patched: dreamevoice/ui/tab_store.py")
 
-    # The original update mechanism fetches an EXE from the upstream project.
-    # Prevent a custom -HU binary from replacing itself with upstream's EXE.
-    patch("dreamevoice/aktualisierung.py", [
-        (
-            "    pfad = _repo_pfad(projekt_url)\n",
-            "    if getattr(sys, \"frozen\", False) and Path(sys.executable).stem.endswith(\"-HU\"):\n"
-            "        return None  # Release updates only through private GitHub Actions.\n"
-            "    pfad = _repo_pfad(projekt_url)\n",
-        ),
-    ])
+    # The HU executable must be able to check and install HU releases.
+    # Never disable updates based on the executable filename.
+    # The search is pinned to our fork, and EXE_NAME must match the actual
+    # release asset for both discovery and checksum-file lookup.
     print("Hungarian overlay applied successfully.")
 
 
