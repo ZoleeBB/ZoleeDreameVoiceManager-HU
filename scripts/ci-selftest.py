@@ -8,6 +8,8 @@ environment mismatches. ANY new failure fails CI.
 from __future__ import annotations
 
 import os
+import ast
+from pathlib import Path
 import re
 import subprocess
 import sys
@@ -37,14 +39,36 @@ EXPECTED_HU_FILENAME_DIFFERENCES = {
 
 
 def verify_hu_updater() -> bool:
-    """Verify the fork's actual update source instead of upstream naming."""
+    """Inspect the exact patched source without importing GUI dependencies."""
+    path = Path(__file__).resolve().parents[1] / "dreamevoice" / "aktualisierung.py"
     try:
-        from dreamevoice import aktualisierung
-        import inspect
-        default = inspect.signature(aktualisierung.pruefen).parameters["projekt_url"].default
-        return (aktualisierung.EXE_NAME == "DreameSprachpaket-HU.exe"
-                and default == "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU")
-    except (ImportError, AttributeError, KeyError, ValueError):
+        source = path.read_text(encoding="utf-8-sig")
+        tree = ast.parse(source, filename=str(path))
+        exe = None
+        project = None
+        body = None
+        for node in tree.body:
+            if isinstance(node, ast.Assign):
+                if any(isinstance(t, ast.Name) and t.id == "EXE_NAME"
+                       for t in node.targets):
+                    exe = ast.literal_eval(node.value)
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == "pruefen":
+                body = node
+                positional = node.args.posonlyargs + node.args.args
+                defaults = node.args.defaults
+                for arg, val in zip(positional[-len(defaults):], defaults):
+                    if arg.arg == "projekt_url":
+                        project = ast.literal_eval(val)
+        valid = (
+            exe == "DreameSprachpaket-HU.exe"
+            and project == "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU"
+            and body is not None
+            and "Release updates only through private GitHub Actions" not in source
+        )
+        print(f"HU updater source: EXE={exe!r}, project={project!r}, valid={valid}", flush=True)
+        return valid
+    except (OSError, SyntaxError, ValueError, TypeError) as exc:
+        print(f"HU updater source validation failed: {exc}", file=sys.stderr, flush=True)
         return False
 
 
@@ -88,7 +112,7 @@ def main() -> int:
     updater_ok = verify_hu_updater()
     print(f"HU updater invariant verified: {updater_ok}", flush=True)
     allowed = EXPECTED_CI_ONLY.copy()
-    if verify_hu_updater():
+    if updater_ok:
         allowed |= EXPECTED_HU_FILENAME_DIFFERENCES
     unknown = [label for label in labels if label not in allowed]
     if unknown or len(labels) != failed or passed < 1000:
