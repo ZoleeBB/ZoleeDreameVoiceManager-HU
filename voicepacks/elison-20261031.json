@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "release_version": "v1.4.0-hu.8",
+  "pack_id": "zolee-dreame-hu-elison-x50-20261031",
+  "display_name": "Magyar – Vicces házimunkás (Elison, kész hangok)",
+  "voice": "Elison – Fresh, Crisp, Hungarian",
+  "voice_id": "Jp9AlKVTDRYwWCf6uKqK",
+  "tts_model": "eleven_flash_v2_5",
+  "verified_model": "Dreame X50 Ultra Complete",
+  "texts_count": 589,
+  "original_ogg_count": 611,
+  "generated_ogg_count": 589,
+  "audio_source": "User-supplied Meine Pakete.zip, final _3 archive, 2026-10-31",
+  "user_texts_sha256": "a4d56a5409ce7a634f01bfd024cf10ad616ffa0d7b955dfa171d98805484e4f7",
+  "overlay_asset": {
+    "name": "Zolee_Dreame_HU_Elison_589_OGG.zip",
+    "bytes": 10874839,
+    "sha256": "3de3e3d6556413caac45e95108354bfcf0fb10d8c9d6e030a2b878c0d8180f48",
+    "format": "ZIP, 589 files named <id>.ogg",
+    "contains_factory_audio": false
+  },
+  "ready_x50_asset": {
+    "name": "Zolee_Dreame_X50_HU_Elison_Ready.tar.gz",
+    "bytes": 9511741,
+    "sha256": "fd70e3627891b959c6ff859b7a5c30f4f8b3d2eaa17dd348008fe9f6fe4cc8a7",
+    "md5": "67264df573d1c304658fdf8130b5979b",
+    "format": "full robot-ready tar.gz, 611 OGG and 6 model metadata files",
+    "contains_factory_audio": true,
+    "distribution": "Private use only pending factory-audio and Elison-voice rights review"
+  },
+  "source_pack_reported_replacements": 594,
+  "notes": [
+    "The factory archive contains 611 OGG files but only 589 final Hungarian texts and corresponding audio recordings.",
+    "The source sidecar's 594 replacements should not be interpreted as 594 unique finalized Hungarian texts.",
+    "The overlay ZIP should be used for redistribution and adapts the 589 generated files to each robot's official language pack.",
+    "Private GitHub Releases require repository access; unauthenticated in-app HTTP downloads will fail."
+  ]
+}
