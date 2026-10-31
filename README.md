@@ -16,7 +16,7 @@ Az Actions pipeline az ellenőrzőösszeget és a teljes archívumtartalmat vali
 ## 🎙️ Kész magyar robot-hangcsomag – ElevenLabs-kulcs nélkül
 
 **A már elkészült magyar hangok letölthetők és felhasználhatók új hanggenerálás nélkül!**
-A Dreame Voice Managerben a **Kész hangok** oldalról nyisd meg a **Kész magyar hang letöltése** lehetőséget, vagy menj közvetlenül a [GitHub Release-hez](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/tag/v1.4.0-hu.8).
+A Dreame Voice Managerben a **Kész hangok** oldalról nyisd meg a **Kész magyar hang letöltése** lehetőséget, vagy menj közvetlenül a [GitHub Release-hez](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/latest).
 
 **Az előre elkészített hangcsomag használata:**
 
@@ -69,6 +69,12 @@ Az upstream ellenőrzött kompatibilitási mintái (a modellkód a gyári belső
 **Más modellnél** a modellfüggetlen, **589 OGG-hangot tartalmazó ZIP-et** importáld, ne az X50 gyári vezérlőadatait is tartalmazó `.tar.gz` csomagot. A program az eltérő hangazonosítókat és gyári metaadatokat a saját robothoz igazítja, de a tényleges telepítés sikerét mindig ellenőrizni kell.
 
 Forrás: [az upstream részletes modellkompatibilitási dokumentációja](https://github.com/Anon365-Project/dreame-sprachpaket-manager/blob/v1.4.0/docs/Modelle.md).
+
+## Magyar nyelvű felület és a támogatási lehetőségek
+
+A Ko-fi és **Revolut-me támogatás** a README bannerének közvetlenül alatta, gombként jelenik meg. A programban a **fejléc állandó részei** a Ko-fi és Revolut-támogatási hivatkozások, így a Kezdőlap, Kész hangok, importálás, hanggenerálás és Beállítások oldalakon egyaránt elérhetők.
+
+A felület Tkinter-szövegeit, a megerősítő ablakokat, az ElevenLabs-hangválasztó beállításait, valamint a generálási/importálási/telepítési folyamat ismert naplóüzeneteit a `dreamevoice/ui_hu.py` fordítja. A fordítóréteg csak **megjelenített szöveget** változtat; robotazonosítót, fájlnevet, API-kulcsot és hangcsomagot nem. A hibák külső szolgáltatásoktól érkező, új üzenetei esetenként továbbra is idegen nyelvűek lehetnek.
 
 ## Jelenlegi felépítés és CI/CD
 
