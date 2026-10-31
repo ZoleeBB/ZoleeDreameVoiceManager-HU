@@ -6,6 +6,7 @@ on:
     paths:
       - VERSION-HU
       - 'voicepacks/assets/**'
+      - '.github/workflows/release.yml'
     tags:
       - 'v*.*.*'
   workflow_dispatch:
