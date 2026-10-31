@@ -67,9 +67,10 @@ class ReleaseVersionTests(unittest.TestCase):
             inspect.signature(aktualisierung.pruefen)
                    .parameters["projekt_url"].default,
             "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU")
-        self.assertIn(
-            '== "dreamesprachpaket-hu.exe"',
-            inspect.getsource(aktualisierung.pruefen))
+        self.assertEqual(aktualisierung.EXE_NAME, "DreameSprachpaket-HU.exe")
+        self.assertIn("EXE_NAME.lower()", inspect.getsource(aktualisierung.pruefen))
+        self.assertNotIn("return None  # Release updates only through private GitHub Actions.",
+                         inspect.getsource(aktualisierung.pruefen))
         # The original author credit remains unchanged.
         from dreamevoice import PROJEKT_URL
         self.assertIn("Anon365-Project", PROJEKT_URL)
