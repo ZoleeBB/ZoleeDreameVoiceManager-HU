@@ -386,6 +386,39 @@ def enable():
     # Dialogs, window titles and TreeView headers are not regular widget text.
     patch_method(tk.Wm, "wm_title", ())
     tk.Wm.title = tk.Wm.wm_title
+    # Sidebar list items, context menu labels and status logs.
+    old_insert = ttk.Treeview.insert
+    @functools.wraps(old_insert)
+    def tree_insert(self, parent, index, iid=None, **kwargs):
+        if "text" in kwargs:
+            kwargs["text"] = translate(kwargs["text"])
+        return old_insert(self, parent, index, iid=iid, **kwargs)
+    ttk.Treeview.insert = tree_insert
+
+    old_item = ttk.Treeview.item
+    @functools.wraps(old_item)
+    def tree_item(self, item, option=None, **kwargs):
+        if "text" in kwargs:
+            kwargs["text"] = translate(kwargs["text"])
+        return old_item(self, item, option, **kwargs)
+    ttk.Treeview.item = tree_item
+
+    for method in ("add_command", "add_cascade", "add_checkbutton", "add_radiobutton"):
+        old = getattr(tk.Menu, method)
+        @functools.wraps(old)
+        def wrapped(self, __old=old, **kwargs):
+            if "label" in kwargs:
+                kwargs["label"] = translate(kwargs["label"])
+            return __old(self, **kwargs)
+        setattr(tk.Menu, method, wrapped)
+
+    from dreamevoice.ui.widgets import LogView
+    old_append = LogView.append
+    @functools.wraps(old_append)
+    def log_append(self, message, kind="info"):
+        return old_append(self, translate(message), kind)
+    LogView.append = log_append
+
     old_heading = ttk.Treeview.heading
     @functools.wraps(old_heading)
     def heading(self, column, *args, **kwargs):
