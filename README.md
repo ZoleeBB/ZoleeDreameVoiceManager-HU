@@ -1,9 +1,9 @@
 <h1 align="center"><img src="assets/branding/readme-banner.svg" alt="Zolee Dreame Voice Manager HU" width="1600"></h1>
 
 <p align="center">
-  <a href="https://ko-fi.com/E1H8299KGN"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Ko-fi támogatás" height="42"></a>
+  <a href="https://ko-fi.com/E1H8299KGN"><img src="assets/branding/kofi-support.svg" alt="Ko-fi támogatás" width="230" height="42"></a>
   &nbsp;
-  <a href="https://revolut.me/zoleebb"><img src="assets/branding/revolut-support.svg" alt="Revolut-me támogatás" height="42"></a>
+  <a href="https://revolut.me/zoleebb"><img src="assets/branding/revolut-support.svg" alt="Revolut-me támogatás" width="230" height="42"></a>
 </p>
 
 ## Előre elkészített magyar hangcsomagok minden új Release-ben
