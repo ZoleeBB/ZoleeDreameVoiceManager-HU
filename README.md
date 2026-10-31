@@ -37,6 +37,14 @@ A kezelőfelületen a `Dialekt erzeugen` (Dialekt előállítása) résznél az 
 
 **Nem magyarítottuk le még a teljes Tkinter felületet.** A hangszövegek magyarok, a kezelőfelület jelenleg nagyrészt német marad. A magyar hangsáv is Windows magyar TTS-hangot igényel; ElevenLabs esetén külön fiók/kulcs és szolgáltatási díj merülhet fel.
 
+## ElevenLabs – magyar beszédgenerálás
+
+A HU-változat az ElevenLabs `eleven_flash_v2_5` modelljét választja alapértelmezettként. A `eleven_multilingual_v2` nem támogatja a magyar nyelvet. A magyar `magyar_vicces` hangcsomag szerkesztésekor a modellválasztó kizárólag a magyarul ellenőrzött `eleven_flash_v2_5` és `eleven_turbo_v2_5` modelleket mutatja. A Flash 2.5 az ajánlott; a Turbo 2.5 régebbi alternatíva.
+
+Az ElevenLabs API-kulcsot a helyben futó programba kell beírni: `Dialekt erzeugen` → `ElevenLabs` → `Verbinden und Stimmen laden`. A kulcsot **nem** kell GitHub Secretsbe tenni, és nem kerül a CI buildbe. Magyar kiejtésű hangot válassz, majd 1–3 próbamondattal teszteld. A hiányzó bemondásokat a program később folytathatóan generálja. Az ElevenLabs kapcsolatra csak generáláskor van szükség, a robotra kész hangfájlok kerülnek.
+
+Az API kulcshoz az ElevenLabs fiókban engedélyezd a Text to Speech és a szükséges Voices / Models / User olvasási hozzáférést; állíts be használati limitet. A kulcsot ne írd dokumentációba, kódba vagy GitHubra.
+
 ## Biztonsági és működési korlátok
 
 - A saját build nem bizonyítja a kártevőmentességet; a források, az FFmpeg és a CI-függőségek ellenőrzése továbbra is szükséges.
