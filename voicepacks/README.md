@@ -10,7 +10,7 @@ A `.github/workflows/release.yml` minden új kiadás előtt meghívja a `scripts
 
 ## Letöltés
 
-[**Kész magyar Elison hangok – GitHub Releases (v1.4.0-hu.8)**](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/latest)
+[**Kész magyar Elison hangok – legfrissebb magyar GitHub Release**](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/latest)
 
 Az **Assets** résznél a következőt töltsd le:
 
