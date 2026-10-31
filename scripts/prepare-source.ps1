@@ -25,6 +25,7 @@ $files = @(
     @{from='requirements-hu-build.txt'; to='requirements-hu-build.txt'},
     @{from='scripts/apply_overlay.py'; to='scripts/apply_overlay.py'},
     @{from='scripts/build-release.ps1'; to='scripts/build-release.ps1'},
+    @{from='scripts/ci-selftest.py'; to='scripts/ci-selftest.py'},
     @{from='README.md'; to='README-HU.md'}
 )
 foreach ($item in $files) {
