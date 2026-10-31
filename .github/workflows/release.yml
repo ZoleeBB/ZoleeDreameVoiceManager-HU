@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - VERSION-HU
+      - 'scripts/ci-selftest.py'
+      - 'scripts/apply_overlay.py'
+      - 'tests/test_hu*.py'
       - 'voicepacks/assets/**'
       - '.github/workflows/release.yml'
     tags:
