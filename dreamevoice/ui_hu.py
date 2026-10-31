@@ -285,9 +285,7 @@ _TRANSLATIONS = {
 _TRANSLATIONS.update({
   "Eigene Stimmen für Dreame-Saugroboter - entwickelt und geprüft am X50 Ultra Complete": "Saját hangok Dreame robotporszívókhoz – Dreame X50 Ultra Complete modellen fejlesztve és ellenőrizve.",
   "Dieselben Zugangsdaten wie in deiner Handy-App": "Ugyanazokat az adatokat add meg, mint a telefonos alkalmazásban.",
-  "Die Daten gehen ausschließlich an Dreame und werden im Windows-Tresor abgelegt, nicht in einer Datei. Es gibt kein Konto bei diesem Programm und keine Weitergabe an Dritte.": "A bejelentkezési adatokat kizárólag a Dreame kapja meg; a jelszót a Windows hitelesítőadat-tárolója védi. Ez a program nem hoz létre külön fiókot, és nem adja tovább az adatokat.
-
-Ha a Dreamehome alkalmazásban Google-fiókkal lépsz be, előbb állíts be külön Dreamehome-jelszót a fiókbeállításokban. Itt a Dreamehome e-mail-címét és saját jelszavát használd, nem a Google-fiókod jelszavát.",
+  "Die Daten gehen ausschließlich an Dreame und werden im Windows-Tresor abgelegt, nicht in einer Datei. Es gibt kein Konto bei diesem Programm und keine Weitergabe an Dritte.": "A bejelentkezési adatokat kizárólag a Dreame kapja meg; a jelszót a Windows hitelesítőadat-tárolója védi. Ez a program nem hoz létre külön fiókot, és nem adja tovább az adatokat.\n\nHa a Dreamehome alkalmazásban Google-fiókkal lépsz be, előbb állíts be külön Dreamehome-jelszót a fiókbeállításokban. Itt a Dreamehome e-mail-címét és saját jelszavát használd, nem a Google-fiókod jelszavát.",
   "Das offizielle Sprachpaket wird geholt": "A gyári hangcsomag letöltése folyamatban.",
   "Jedes eigene Paket entsteht als Kopie des offiziellen - nur so bleibt keine Ansage auf der Strecke. Deshalb wird es einmalig heruntergeladen und danach wiederverwendet.": "A saját hangcsomag a gyári csomagra épül, ezért nem tűnnek el a hiányzó bemondások. A gyári csomagot egyszer letöltjük, később újra felhasználjuk.",
   "Aussuchen, anhören, aufspielen - für jede Stimme gleich. Jede landet an derselben Stelle im Roboter und ersetzt die vorige.": "Válaszd ki a hangot, hallgasd meg, majd telepítsd a robotra. Az új hang mindig az előző egyéni hang helyére kerül.",
