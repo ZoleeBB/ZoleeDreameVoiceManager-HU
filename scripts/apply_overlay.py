@@ -339,10 +339,12 @@ def main() -> None:
         (
             '        ttk.Label(card.content,\n'
             '                  text=("Die Kostprobe spricht drei Sätze',
-            '        ttk.Button(dateien, text="Hiányzó magyar hangok exportálása",\n'
+            '        hu_actions = ttk.Frame(card.content, style="Card.TFrame")\n'
+            '        hu_actions.pack(fill="x", pady=(8, 0))\n'
+            '        ttk.Button(hu_actions, text="Hiányzó magyar hangok exportálása",\n'
             '                   style="Small.TButton",\n'
-            '                   command=self._hu_export_missing).pack(side="left", padx=(8, 0))\n'
-            '        ttk.Button(dateien, text="Magyar fordítások importálása",\n'
+            '                   command=self._hu_export_missing).pack(side="left")\n'
+            '        ttk.Button(hu_actions, text="Magyar fordítások importálása",\n'
             '                   style="Small.TButton",\n'
             '                   command=self._hu_import_missing).pack(side="left", padx=(8, 0))\n'
             '\n'
