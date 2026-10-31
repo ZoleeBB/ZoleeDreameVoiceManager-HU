@@ -38,6 +38,11 @@ class HungarianUiTests(unittest.TestCase):
         self.assertEqual(translate("Webserver beendet."),
                          "A helyi webszerver leállt.")
 
+    def test_remaining_german_tour_and_voice_labels(self):
+        self.assertEqual(translate("✓ Das hast du schon erledigt."),
+                         "✓ Ezt már elvégezted.")
+        self.assertEqual(translate("    noch keine"), "    Még nincs")
+
     def test_hungarian_progress_logs(self):
         self.assertEqual(
             translate("Erzeuge Dialektpaket: Magyar – Vicces házimunkás"),
