@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="480" viewBox="0 0 1600 480" role="img" aria-label="Zolee Dreame Voice Manager HU – Magyar robotporszívó hangcsomagok">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#091724"/><stop offset=".55" stop-color="#102c42"/><stop offset="1" stop-color="#07121e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#06c0cf" stop-opacity=".65"/><stop offset=".5" stop-color="#078eb1" stop-opacity=".15"/><stop offset="1" stop-color="#078eb1" stop-opacity="0"/></radialGradient>
+ <linearGradient id="robot" x1=".12" y1="0" x2=".8" y2="1"><stop stop-color="#50657b"/><stop offset=".38" stop-color="#23394b"/><stop offset="1" stop-color="#081b2d"/></linearGradient>
+ <linearGradient id="wave"><stop stop-color="#38d0db" stop-opacity="0"/><stop offset=".5" stop-color="#44e7f2"/><stop offset="1" stop-color="#38d0db" stop-opacity="0"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+ <filter id="shadow"><feGaussianBlur stdDeviation="11"/></filter>
+</defs>
+<rect width="1600" height="480" fill="url(#bg)"/>
+<path d="M0 385 Q405 290 760 412 T1600 346 V480 H0Z" fill="#0c2838" opacity=".8"/>
+<circle cx="1260" cy="220" r="315" fill="url(#glow)"/>
+<g opacity=".16" stroke="#67d7e2" stroke-width="1"><path d="M0 380 H1600M0 420H1600M0 460H1600"/><path d="M1020 0V480M1120 0V480M1220 0V480M1320 0V480M1420 0V480"/></g>
+<path d="M875 95 C980 32 1102 40 1198 102" stroke="#45c6dd" fill="none" stroke-width="3" opacity=".32"/>
+<path d="M920 337 C1082 300 1152 340 1282 283 S1515 274 1600 220" fill="none" stroke="url(#wave)" stroke-width="5" opacity=".85"/>
+<path d="M930 347 C1090 320 1149 355 1285 300 S1490 290 1590 232" fill="none" stroke="#27b1d2" stroke-width="2" opacity=".45"/>
+<circle cx="1080" cy="149" r="98" fill="#0e3348" opacity=".85" stroke="#29cdd7" stroke-width="4"/>
+<circle cx="1080" cy="149" r="80" fill="none" stroke="#26a8c8" stroke-width="1.6" opacity=".5"/>
+<rect x="1066" y="109" width="28" height="64" rx="14" fill="none" stroke="#8af6f3" stroke-width="6"/>
+<path d="M1054 145a26 26 0 0 0 52 0M1080 171v19m-22 0h44" fill="none" stroke="#8af6f3" stroke-width="5" stroke-linecap="round"/>
+<g stroke="#2de2ec" stroke-width="5" stroke-linecap="round" opacity=".8"><path d="M922 149v14m-16-21v28m-16-18v10m204-11v17m22-28v35m22-44v50m22-36v22"/></g>
+<ellipse cx="1303" cy="398" rx="271" ry="28" fill="#010b17" opacity=".6" filter="url(#shadow)"/>
+<ellipse cx="1295" cy="328" rx="236" ry="100" fill="url(#robot)" stroke="#6a8297" stroke-width="6"/>
+<ellipse cx="1295" cy="317" rx="227" ry="89" fill="#1e3345" stroke="#0a1929" stroke-width="8"/>
+<ellipse cx="1295" cy="311" rx="199" ry="65" fill="#344a5a" opacity=".35"/>
+<ellipse cx="1295" cy="278" rx="50" ry="28" fill="#10263a" stroke="#6ca3ba" stroke-width="5"/>
+<ellipse cx="1295" cy="270" rx="41" ry="16" fill="#132d40"/>
+<path d="M1179 372Q1295 401 1405 372" fill="none" stroke="#12bbd8" stroke-width="5" opacity=".65"/>
+<path d="M1099 345Q1052 330 1044 349" stroke="#c9e5ef" stroke-width="5" fill="none" opacity=".7"/>
+<text x="88" y="164" font-family="Arial,Segoe UI,sans-serif" font-size="74" font-weight="750" fill="#f4fbff">Zolee <tspan fill="#56ddeb">Dreame</tspan></text>
+<text x="88" y="239" font-family="Arial,Segoe UI,sans-serif" font-size="65" font-weight="700" fill="#effaff">Voice Manager <tspan fill="#56ddeb">HU</tspan></text>
+<rect x="88" y="273" width="43" height="6" rx="3" fill="#de5464"/><rect x="137" y="273" width="43" height="6" rx="3" fill="#ecf8f8"/><rect x="186" y="273" width="43" height="6" rx="3" fill="#3bb880"/>
+<text x="88" y="329" font-family="Arial,Segoe UI,sans-serif" font-size="26" fill="#c3dce8">Magyar hangcsomagok Dreame robotporszívókhoz</text>
+<text x="88" y="382" font-family="Arial,Segoe UI,sans-serif" font-size="23" fill="#79d9e4">ElevenLabs   •   Kész hangok   •   Robotra telepítés</text>
+</svg>
