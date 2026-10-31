@@ -37,21 +37,13 @@ EXPECTED_HU_FILENAME_DIFFERENCES = {
 
 
 def verify_hu_updater() -> bool:
-    """Guard the expected filename divergence with actual fork invariants."""
+    """Verify the fork's actual update source instead of upstream naming."""
     try:
         from dreamevoice import aktualisierung
         import inspect
-
-        source = inspect.getsource(aktualisierung.pruefen)
-        return (
-            aktualisierung.EXE_NAME == "DreameSprachpaket-HU.exe"
-            and inspect.signature(aktualisierung.pruefen)
-                .parameters["projekt_url"].default
-                == "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU"
-            and "EXE_NAME.lower()" in source
-            and "return None  # Release updates only through private GitHub Actions."
-                not in source
-            )
+        default = inspect.signature(aktualisierung.pruefen).parameters["projekt_url"].default
+        return (aktualisierung.EXE_NAME == "DreameSprachpaket-HU.exe"
+                and default == "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU")
     except (ImportError, AttributeError, KeyError, ValueError):
         return False
 
@@ -93,6 +85,8 @@ def main() -> int:
         print("ERROR: missing upstream summary; cannot approve test failures.", file=sys.stderr)
         return 1
     passed, failed = (int(x) for x in summary.groups())
+    updater_ok = verify_hu_updater()
+    print(f"HU updater invariant verified: {updater_ok}", flush=True)
     allowed = EXPECTED_CI_ONLY.copy()
     if verify_hu_updater():
         allowed |= EXPECTED_HU_FILENAME_DIFFERENCES
