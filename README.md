@@ -2,6 +2,14 @@
 
 **Alap:** [Anon365-Project/dreame-sprachpaket-manager](https://github.com/Anon365-Project/dreame-sprachpaket-manager), **v1.4.0**. Az eredeti forrás MIT-licenc alatt áll. Az eredeti LICENSE és szerzői információk változatlanul megmaradnak. Az eredeti német hanganyagok ettől független, saját felhasználási feltételek alá esnek; a saját HU build nem csomagolja őket.
 
+## Végleges magyar alapszövegek (v1.4.0-hu.8)
+
+A programba bekerült a felhasználó 2026. október 31-én átadott, kézzel szerkesztett `magyar_vicces_vegleges.json` állományának **mind a 589 magyar szövege**. A `dreamevoice/hu_preset.py` `TEXTS` szótára a teljes, jóváhagyott szövegkészletet tartalmazza, ID és szöveg szerint 1:1-ben; a korábbi 181 bemondásos kezdő csomag megszűnt alapértelmezettnek lenni. A Dreame X50 Ultra Complete eredeti hangcsomagjának 611 fájljából így 589 ID kapott magyar szöveget (**96,4%**); 22, még be nem azonosított hang változatlanul gyári hang marad. Ez nem azt jelenti, hogy 589 hangfelvétel előre generálva van: a TTS-fájlokat az alkalmazás csak a felhasználó kérésére készíti el.
+
+**Meglévő felhasználói beállítások megőrzése:** az `install_if_missing()` csak az első indításkor hoz létre helyi saját szövegcsomagot. Ha a `magyar_vicces` csomag már létezik az `Eigene Pakete` könyvtárban, a Release nem írja felül a helyi fájlt és a `config.json` egyedi szövegmódosításait. Az alapcsomag megváltoztatása nem írja felül és nem generálja újra a felhasználó korábban elkészített ElevenLabs-hangjait. Új telepítéskor automatikusan az 589 szöveges kezdő csomag jelenik meg.
+
+**Szöveghűség:** a `tests/test_hu_preset.py` a teljes 589 bejegyzés SHA-256 ellenőrzőösszegét és a korábbi személyre szabott mondatokat is ellenőrzi. A felhasználó által írt szövegeket (szleng, humor, helyesírás) nem módosítjuk automatikusan.
+
 ## Jelenlegi felépítés és CI/CD
 
 A privát repóban csak a **magyar kiegészítés (overlay)** van. A fordító workflow a GitHubról klónozza az eredeti program pontosan rögzített `v1.4.0` kiadását (`852f3043727fc85a3c06cb54231a00de013b1492`), majd a `scripts/apply_overlay.py` módosításait és a **saját szövegeidet** (`dreamevoice/hu_preset.py`) alkalmazza.
