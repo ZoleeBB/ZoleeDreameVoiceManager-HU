@@ -1,10 +1,32 @@
 # Zolee - Dreame Voice Manager HU – privát fejlesztői változat
 
+## 🎙️ Kész magyar robot-hangcsomag – ElevenLabs-kulcs nélkül
+
+**A már elkészült magyar hangok letölthetők és felhasználhatók új hanggenerálás nélkül!**
+A Dreame Voice Managerben a **Kész hangok** oldalról nyisd meg a **Kész magyar hang letöltése** lehetőséget, vagy menj közvetlenül a [GitHub Release-hez](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/tag/v1.4.0-hu.8).
+
+**Az előre elkészített hangcsomag használata:**
+
+1. A Release **Assets** részéből töltsd le a `Zolee_Dreame_HU_Elison_589_OGG.zip` fájlt. **Ne csomagold ki!** Ha a ZIP nincs még az Assets között, a feltöltése még hátravan.
+2. A programban jelentkezz be a Dreamehome-fiókba, és töltsd le a robothoz tartozó eredeti hangcsomagot a **Start** oldalon.
+3. A **Hangfelvételek importálása** oldalon importáld a ZIP-et. A program helyben készít robot-kompatibilis csomagot, az eredeti hangok meghagyásával.
+4. A **Kész hangok** oldalon hallgasd meg, majd telepítsd a magyar hangot a robotra.
+
+**Nem szükséges ElevenLabs-előfizetés vagy API-kulcs; a telepítés nem használ fel TTS-kreditet.** A felvételek már elkészültek, az importálás helyben végzett hangátalakítás.
+
+**Jelenlegi lefedettség:** 589 külön magyar bemondás a Dreame X50 Ultra Complete 611 gyári hangjából (96,4%). A fennmaradó 22 hang eredeti nyelven marad. A kipróbált modell az **X50 Ultra Complete**; más robotnál a modellhez igazított ZIP-importot használd, működése a készülék hangtámogatásától függ.
+
+[**Részletes útmutató, SHA-256 ellenőrzés és modellkompatibilitás**](voicepacks/README.md) · [**Hangcsomag manifest**](voicepacks/elison-20261031.json)
+
+> A repó jelenleg privát. A letöltéshez GitHub-hozzáférés szükséges. A kész ZIP Release-be történő feltöltése külön lépés; a README nem állítja, hogy már megjelent, amíg az Assets alatt ténylegesen nem látható.
+
+---
+
 **Alap:** [Anon365-Project/dreame-sprachpaket-manager](https://github.com/Anon365-Project/dreame-sprachpaket-manager), **v1.4.0**. Az eredeti forrás MIT-licenc alatt áll. Az eredeti LICENSE és szerzői információk változatlanul megmaradnak. Az eredeti német hanganyagok ettől független, saját felhasználási feltételek alá esnek; a saját HU build nem csomagolja őket.
 
 ## Végleges magyar alapszövegek (v1.4.0-hu.8)
 
-A programba bekerült a felhasználó 2026. október 31-én átadott, kézzel szerkesztett `magyar_vicces_vegleges.json` állományának **mind a 589 magyar szövege**. A `dreamevoice/hu_preset.py` `TEXTS` szótára a teljes, jóváhagyott szövegkészletet tartalmazza, ID és szöveg szerint 1:1-ben; a korábbi 181 bemondásos kezdő csomag megszűnt alapértelmezettnek lenni. A Dreame X50 Ultra Complete eredeti hangcsomagjának 611 fájljából így 589 ID kapott magyar szöveget (**96,4%**); 22, még be nem azonosított hang változatlanul gyári hang marad. Ez nem azt jelenti, hogy 589 hangfelvétel előre generálva van: a TTS-fájlokat az alkalmazás csak a felhasználó kérésére készíti el.
+A programba bekerült a felhasználó 2026. október 31-én átadott, kézzel szerkesztett `magyar_vicces_vegleges.json` állományának **mind a 589 magyar szövege**. A `dreamevoice/hu_preset.py` `TEXTS` szótára a teljes, jóváhagyott szövegkészletet tartalmazza, ID és szöveg szerint 1:1-ben; a korábbi 181 bemondásos kezdő csomag megszűnt alapértelmezettnek lenni. A Dreame X50 Ultra Complete eredeti hangcsomagjának 611 fájljából így 589 ID kapott magyar szöveget (**96,4%**); 22, még be nem azonosított hang változatlanul gyári hang marad. Az 589 szöveghez az Elison hanggal **külön előre elkészített OGG ZIP** is rendelkezésre áll, amelyet a felhasználó TTS-generálás nélkül importálhat; az EXE fájlba azonban nem ágyazunk be hanganyagokat.
 
 **Meglévő felhasználói beállítások megőrzése:** az `install_if_missing()` csak az első indításkor hoz létre helyi saját szövegcsomagot. Ha a `magyar_vicces` csomag már létezik az `Eigene Pakete` könyvtárban, a Release nem írja felül a helyi fájlt és a `config.json` egyedi szövegmódosításait. Az alapcsomag megváltoztatása nem írja felül és nem generálja újra a felhasználó korábban elkészített ElevenLabs-hangjait. Új telepítéskor automatikusan az 589 szöveges kezdő csomag jelenik meg.
 
@@ -62,7 +84,7 @@ Első indításkor a program létrehozza a `Magyar – Vicces házimunkás` szer
 
 A kezelőfelületen a `Dialekt erzeugen` (Dialekt előállítása) résznél az `Eigenes · Magyar – Vicces házimunkás` elemet válaszd. A Windows-hangok között ez a változat már német **és magyar** hangokat is felsorol. Ha nincs `hu-HU` hang, Windows **Settings → Time & language → Language & region → Hungarian → Language options → Text-to-speech** résznél add hozzá, ha elérhető. A lista telepített hangoktól függ; előbb hallgasd meg a próbát, és csak utána generáld a csomagot. A kötelező eredeti Dreame hangcsomagot a program letölti a gyári forrásból.
 
-**Nem magyarítottuk le még a teljes Tkinter felületet.** A hangszövegek magyarok, a kezelőfelület jelenleg nagyrészt német marad. A magyar hangsáv is Windows magyar TTS-hangot igényel; ElevenLabs esetén külön fiók/kulcs és szolgáltatási díj merülhet fel.
+**A magyar felület fejlesztése folyamatban van.** Egyes magyartalan és német szövegek még előfordulhatnak; javításuk külön fejlesztés. A magyar hangsáv is Windows magyar TTS-hangot igényel; ElevenLabs esetén külön fiók/kulcs és szolgáltatási díj merülhet fel.
 
 ## ElevenLabs – magyar beszédgenerálás
 
@@ -83,3 +105,9 @@ Az API kulcshoz az ElevenLabs fiókban engedélyezd a Text to Speech és a szük
 ## Saját változat frissítése
 
 Az `upstream` remote az eredeti publikus projekt. Új upstream kiadást előbb ellenőrzött fejlesztői branchbe hozz be, futtasd a teszteket, és PR-rel egyesítsd. A saját magyar presetet nem írjuk felül az újraindításkor: ha egyszer már létrejött és szerkesztetted, változatlan marad.
+
+## A fejlesztés támogatása
+
+A program és a magyar hangcsomag fejlesztése szabadidős projekt. A támogatás önkéntes, nem feltétele a használatnak.
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1H8299KGN) · [Revolut támogatás](https://revolut.me/zoleebb)
