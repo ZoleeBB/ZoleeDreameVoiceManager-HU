@@ -500,6 +500,10 @@ _DYNAMIC.extend((re.compile(a), b) for a, b in [
      r"FFmpeg letöltése (kb. \1 MB)…"),
     (r"^Kostprobe fertig - (\d+) Sätze$",
      r"Hangminta elkészült – \1 mondat"),
+    (r"^(\d+) Ansagen  ·  (\d+) selbst geändert$",
+     r"\1 bemondás · \2 saját módosítás"),
+    (r"^(\d+) selbst geändert$",
+     r"\1 saját módosítás"),
     (r"^Zeige (\d+) von (\d+) Ansagen$",
      r"\1 / \2 bemondás megjelenítve"),
 ])
