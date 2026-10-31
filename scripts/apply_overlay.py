@@ -475,17 +475,32 @@ def main() -> None:
         ),
     ])
 
-    # NavShell renders labels with icon prefixes ("🏠 Start") and uppercases
-    # section titles. The generic Tk text matcher cannot translate those
-    # combined strings. Translate only the labels/section at source while
-    # retaining internal navigation keys verbatim.
+    # Translate NavShell's DISPLAYED strings only. The original entry.label
+    # is intentionally preserved: the upstream guided tour uses the German
+    # source labels to identify its navigation targets. Mutating them caused
+    # a regression in selftest.py ("Fertige Stimmen" lookup).
     patch("dreamevoice/ui/shell.py", [
         (
-            '        eintrag = Eintrag(key=key, label=label, icon=icon, seite=seite,',
-            '        from ..ui_hu import translate\n'
-            '        label = translate(label)\n'
-            '        section = translate(section)\n'
-            '        eintrag = Eintrag(key=key, label=label, icon=icon, seite=seite,',
+            '    def _zeile_bauen(self, eintrag: Eintrag) -> None:',
+            '    def _zeile_bauen(self, eintrag: Eintrag) -> None:\n'
+            '        from ..ui_hu import translate',
+        ),
+        (
+            'text=eintrag.section.upper(),',
+            'text=translate(eintrag.section).upper(),',
+        ),
+        (
+            'text=f"{eintrag.icon}  {eintrag.label}",',
+            'text=f"{eintrag.icon}  {translate(eintrag.label)}",',
+        ),
+        (
+            '                from .widgets import show_info',
+            '                from .widgets import show_info\n'
+            '                from ..ui_hu import translate',
+        ),
+        (
+            'show_info(self, self.theme, f"{eintrag.label} geht noch nicht",',
+            'show_info(self, self.theme, f"{translate(eintrag.label)} geht noch nicht",',
         ),
     ])
 
