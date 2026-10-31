@@ -239,6 +239,62 @@ def main() -> None:
         ),
     ])
 
+    # Fix false "quota exhausted" results in long ElevenLabs runs.
+    # Official ElevenLabs error docs classify HTTP 429 as concurrency/rate
+    # limiting or system overload, NOT as exhausted account credits.
+    # The upstream implementation also ramps up to eight concurrent TTS
+    # requests; two workers leave room even on the smallest API plans.
+    patch("dreamevoice/elevenlabs.py", [
+        (
+            "MAX_GLEICHZEITIG = 8\nSTART_GLEICHZEITIG = 3",
+            "MAX_GLEICHZEITIG = 2\nSTART_GLEICHZEITIG = 1",
+        ),
+        (
+            "MAX_VERSUCHE = 4\n",
+            "MAX_VERSUCHE = 8\n",
+        ),
+        (
+            "MAX_WELLEN_GEDROSSELT = 10\n",
+            "MAX_WELLEN_GEDROSSELT = 12\n",
+        ),
+        (
+            '        if any(w in meldung for w in ("quota", "character_limit", "credit",\n'
+            '                                      "exceeded", "aufgebraucht")):\n'
+            '            raise NetworkError(\n'
+            '                "Das Kontingent bei ElevenLabs ist aufgebraucht.",\n'
+            '                "Das Freikontingent füllt sich jeden Monat wieder auf. Bis "\n'
+            '                "dahin kannst du das Paket mit der Windows-Stimme erzeugen.")\n'
+            '        raise Ueberlastet(',
+            '        # Even an API message containing "quota" can refer to an\n'
+            '        # endpoint rate quota. For HTTP 429 always back off and retry.\n'
+            '        raise Ueberlastet(',
+        ),
+        (
+            "    return resp\n\n\ndef check_key(api_key: str) -> Quota:",
+            '    if resp.status_code in (500, 502, 503, 504):\n'
+            '        raise Ueberlastet(\n'
+            '            f"ElevenLabs átmeneti HTTP {resp.status_code} hibát jelzett.",\n'
+            '            "Átmeneti szolgáltatáshiba; a program megpróbálja újra. "\n'
+            '            f"Kód: {(_server_message(resp) or \u0027nincs részlet\u0027)[:160]}")\n'
+            '    return resp\n\n\ndef check_key(api_key: str) -> Quota:',
+        ),
+    ])
+    # Intermittent service errors should be retried, not packaged as partial
+    # HU voice sets. This adjustment only targets the known transient error.
+    patch("dreamevoice/elevenlabs.py", [
+        (
+            '            if isinstance(fehler, Ueberlastet):\n'
+            '                # Eine Drosselung kostet kein Kontingent - erneut',
+            '            if (isinstance(fehler, NetworkError) and\n'
+            '                    fehler.message == "ElevenLabs ist nicht erreichbar."):\n'
+            '                fehler = Ueberlastet(\n'
+            '                    "ElevenLabs-hálózati hiba: újrapróbálkozás.",\n'
+            '                    str(fehler))\n'
+            '            if isinstance(fehler, Ueberlastet):\n'
+            '                # Eine Drosselung kostet kein Kontingent - erneut',
+        ),
+    ])
+
     # This call occurs in 4 guard locations as well as the voice combobox.
     path = ROOT / "dreamevoice/ui/tab_store.py"
     s = path.read_text(encoding="utf-8-sig")
