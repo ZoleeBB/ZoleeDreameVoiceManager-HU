@@ -27,6 +27,34 @@ EXPECTED_CI_ONLY = {
     "ein ganzer Ordner geht genauso",
 }
 
+# These two upstream assertions explicitly require the ORIGINAL German
+# executable name. The HU fork intentionally publishes a different filename.
+# Do not waive them unless the HU updater is independently verified below.
+EXPECTED_HU_FILENAME_DIFFERENCES = {
+    "die Summe der Programmdatei wird genommen",
+    "die Programmdatei heißt weiter DreameSprachpaket.exe",
+}
+
+
+def verify_hu_updater() -> bool:
+    """Guard the expected filename divergence with actual fork invariants."""
+    try:
+        from dreamevoice import aktualisierung
+        import inspect
+
+        source = inspect.getsource(aktualisierung.pruefen)
+        return (
+            aktualisierung.EXE_NAME == "DreameSprachpaket-HU.exe"
+            and inspect.signature(aktualisierung.pruefen)
+                .parameters["projekt_url"].default
+                == "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU"
+            and "EXE_NAME.lower()" in source
+            and "return None  # Release updates only through private GitHub Actions."
+                not in source
+            )
+    except (ImportError, AttributeError, KeyError, ValueError):
+        return False
+
 
 def main() -> int:
     # GitHub's Windows PowerShell runner can default to cp1252.
@@ -65,7 +93,10 @@ def main() -> int:
         print("ERROR: missing upstream summary; cannot approve test failures.", file=sys.stderr)
         return 1
     passed, failed = (int(x) for x in summary.groups())
-    unknown = [label for label in labels if label not in EXPECTED_CI_ONLY]
+    allowed = EXPECTED_CI_ONLY.copy()
+    if verify_hu_updater():
+        allowed |= EXPECTED_HU_FILENAME_DIFFERENCES
+    unknown = [label for label in labels if label not in allowed]
     if unknown or len(labels) != failed or passed < 1000:
         print(
             "ERROR: unexpected upstream test failure(s): "
@@ -76,12 +107,12 @@ def main() -> int:
         return 1
 
     print(
-        f"Upstream CI result: {passed} passed; {failed} documented CI-only "
-        "mismatches (unbundled voice archives / runner AMSI). "
+        f"Upstream CI result: {passed} passed; {failed} documented "
+        "mismatches (unbundled archives, runner AMSI and verified HU EXE name). "
         "Any other failure is fatal."
     )
     for label in labels:
-        print("  CI-only exclusion: " + label)
+        print("  verified expected difference: " + label)
     return 0
 
 
