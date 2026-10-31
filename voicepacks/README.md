@@ -4,9 +4,9 @@
 
 ## Automatikusan csatolt Release-fájlok
 
-A `.github/workflows/release.yml` minden új kiadás előtt meghívja a `scripts/verify_release_assets.py` validátort. Ez a rögzített SHA-256/MD5 és méret mellett az OGG-állományok, a teljes csomag 611 hangja, valamint a 6 gyári vezérlőfájl épségét is ellenőrzi.
+A két hangarchívum már megtalálható a repository `voicepacks/assets/` mappájában; a felhasználónak **nem kell újra feltöltenie** őket. A kiadási workflow ellenőrzi a méretet, az ellenőrzőösszegeket és a csomagok szerkezetét, mielőtt a GitHub Release-hez csatolja az állományokat. A sérült vagy hiányzó fájlok a Release-folyamatot megszakítják.
 
-**Egyszeri üzembe helyezés:** töltsd fel az 589 OGG-s ZIP-et és az X50-es tar.gz-t **ugyanabban a commitban** a `voicepacks/assets/` könyvtárba. Az erre induló workflow a már meglévő aktuális Release hangfájljait is automatikusan hozzáadja/frissíti. A későbbi `VERSION-HU`-emelések ugyanezt elvégzik. Ha bármelyik fájl hiányzik, sérült vagy módosult ellenőrzőösszeg nélkül, a Release **meghiúsul**, nem publikál hiányos csomagot.
+**Fontos jogi megjegyzés:** a teljes X50 archívum gyári Dreame-hangokat és vezérlőadatokat is tartalmazhat. A repository és a Release-ek nyilvánosak, ez azonban nem helyettesíti a gyári hangok és a generált hanganyagok újraterjesztéséhez szükséges jogok ellenőrzését.
 
 ## Letöltés
 
@@ -16,7 +16,7 @@ Az **Assets** résznél a következőt töltsd le:
 
 `Zolee_Dreame_HU_Elison_589_OGG.zip` – 589 már előállított magyar OGG, **10 874 839 bájt**, SHA-256: `3de3e3d6556413caac45e95108354bfcf0fb10d8c9d6e030a2b878c0d8180f48`.
 
-**Figyelem:** a repó jelenleg **privát**. A linket csak olyan személy éri el, akinek hozzáférést adtál; a kész hangcsomag használatához önmagában nem kell ElevenLabs-hozzáférés. A hangfájlokat **egyetlen egyszer** kell a repó [voicepacks/assets](assets/README.md) mappájába feltölteni. A GitHub Actions ezután **automatikusan csatolja a ZIP-et és a teljes X50 `.tar.gz` archívumot minden új Release-hez**, így a későbbi verzióknál nincs szükség ismételt kézi feltöltésre. A repó jelenleg privát; a Release-hez való hozzáférés GitHub-jogosultságot igényel.
+A repository **nyilvános**; a közzétett Release-ek letöltéséhez nincs szükség külön repository-meghívásra. Az archívumokat a fejlesztési folyamathoz már feltöltöttük, ezért a felhasználóknak kizárólag a megfelelő kiadási fájlt kell letölteniük.
 
 ## Telepítés a Dreame hangcsomag-kezelővel – másoknak
 
@@ -35,7 +35,7 @@ A feltöltött ZIP-ből az utolsó, `_3.tar.gz` változat alapján külön archi
 
 `Zolee_Dreame_X50_HU_Elison_Ready.tar.gz` – **9 511 741 bájt**, MD5 `67264df573d1c304658fdf8130b5979b`, SHA-256 `fd70e3627891b959c6ff859b7a5c30f4f8b3d2eaa17dd348008fe9f6fe4cc8a7`.
 
-Ez közvetlenül tartalmazza az X50 robot 611 hangfájlját és a 6 gyári vezérlőállományt; **22 gyári hangot is tartalmaz**, ezért nyilvános továbbterjesztése előtt a Dreame-hanganyagok jogait ellenőrizni kell. Ezt **nem tesszük a forráskódba vagy az alapértelmezett nyilvános Release-be**. Magáncélra az eredeti X50 csomag már bizonyítottan telepíthető; eltérő robotmodellnél **mindig az OGG ZIP-et használd**, ne az X50 teljes archívumot.
+Ez közvetlenül tartalmazza az X50 robot 611 hangfájlját és a 6 gyári vezérlőállományt; **22 gyári hangot is tartalmaz**, ezért nyilvános továbbterjesztése előtt a Dreame-hanganyagok jogait ellenőrizni kell. A jelenlegi kiadási workflow a teljes X50 archívumot is a Release-hez csatolja. **A gyári tartalom nyilvános terjesztésének jogszerűségét külön ellenőrizni kell.** Magáncélra az eredeti X50 csomag már bizonyítottan telepíthető; eltérő robotmodellnél **mindig az OGG ZIP-et használd**, ne az X50 teljes archívumot.
 
 ## Az adatok ellenőrzése
 
@@ -72,7 +72,7 @@ A `594 replaced` érték a kész archívum naplójában szereplő **helyettesít
 - A hangok a **felhasználó által írt** magyar szövegek alapján, az ElevenLabs **Elison** hangjával készültek. A hang és generált tartalom felhasználását a vonatkozó ElevenLabs- és Voice Library-feltételek szabályozzák; nagyobb körű megosztás vagy nyilvános közzététel előtt ellenőrizd a jogosultságokat.
 - Az **OGG ZIP** nem tartalmaz gyári Dreame-hangfájlokat, így az a **javasolt megosztási változat**.
 - Az X50 teljes `.tar.gz` gyári hangokat/metadata-t is tartalmaz, ezért **külön, opcionális** fájl marad.
-- A privát GitHub-repóból és privát Release-ből történő letöltés GitHub-hozzáférést igényel.
+- A repository és a nyilvánosan közzétett Release-ek jelenleg nyilvánosak. A letöltéshez nincs szükség külön GitHub-hozzáférésre.
 
 ## Karbantartás
 
