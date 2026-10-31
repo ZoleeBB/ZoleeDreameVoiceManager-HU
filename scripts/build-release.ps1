@@ -8,9 +8,11 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 Set-Location (Join-Path $PSScriptRoot '..')
 
-# Verify the precise archive hash; mutable upstream 'latest' must fail CLOSED.
-$FFmpegUrl = 'https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip'
-$FFmpegSha256 = '8df2981dd8e473c4c34774a15247ac62a06f12ae015074fa55ac15f262a2d055'
+# Immutable tagged BtbN FFmpeg build (2026-10-25 13:00), verified against
+# the sha256 digest exposed by the official GitHub Release asset metadata.
+# Never download mutable /latest in a reproducible/supply-chain-safe build.
+$FFmpegUrl = 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-10-25-13-00/ffmpeg-N-128094-g31855b2a70-win64-gpl.zip'
+$FFmpegSha256 = '94810842a634c7742936dc2690d6b4957561a38b05f00c27f045e07131924acc'
 $TempFolder = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } else { $env:TEMP }
 $TempZip = Join-Path $TempFolder 'dreame-hu-ffmpeg.zip'
 
