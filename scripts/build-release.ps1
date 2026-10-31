@@ -20,8 +20,8 @@ if ($LASTEXITCODE -ne 0) { throw 'pip install failed' }
 
 if (-not $SkipSelfTest) {
     Write-Host 'Run upstream self-test...'
-    python selftest.py
-    if ($LASTEXITCODE -ne 0) { throw 'Upstream self-test failed' }
+    python scripts/ci-selftest.py
+    if ($LASTEXITCODE -ne 0) { throw 'Upstream self-test failed (unexpected errors)' }
     Write-Host 'Run HU regression checks...'
     python -m unittest discover -s tests -p 'test_hu*.py' -v
     if ($LASTEXITCODE -ne 0) { throw 'HU tests failed' }
