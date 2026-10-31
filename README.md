@@ -11,8 +11,10 @@ Ez szándékos: az upstream forrás nem kell még egyszer a repóba, és a magya
 **Teendők:**
 1. Merge előtt a PR-nél ellenőrizd a `Dreame HU - Windows Build` eredményét.
 2. A sikeres build `DreameVoiceManager-HU` artifactja 7 napig tölthető le.
-3. A PR merge után a `main` branch `Actions → Dreame HU - Windows Release → Run workflow` menüjében állítsd a verziót `v1.4.0-hu.1` értékre. A build tesztel, majd a Releases felületre feltölti az EXE-t és az ellenőrzőösszeget.
+3. A PR sikeres ellenőrzését követően a `main`-be merge-elt `VERSION-HU` fájl automatikusan elindítja az első Release workflow-t (`v1.4.0-hu.1`). A build tesztel, majd a Releases felületre feltölti az EXE-t és az ellenőrzőösszeget. Későbbi kiadáshoz módosítsd a `VERSION-HU` értékét, és egyesítsd a `main`-be; szükség esetén a workflow kézzel is indítható.
 4. A Windows EXE nem aláírt. Indítás után ellenőrizd a magyar TTS-hangot és hallgasd meg az egyes bemondásokat a robotra telepítés előtt.
+
+**CI megjegyzés:** az upstream `selftest.py` minden tesztjét lefuttatjuk, de a GitHub runnerén hiányzó, külön kiadott hat német hangarchívumhoz és az AMSI környezetéhez kapcsolódó, név szerint felsorolt 12 eltérés nem blokkolja a buildet. Bármely egyéb sikertelen upstream teszt hibának számít. A magyar regressziós tesztek mindig kötelezőek.
 
 **Helyi fordítás:** PowerShellben futtasd a `./scripts/prepare-source.ps1` scriptet a repó gyökeréből, utána `cd _upstream-src`, majd `./scripts/build-release.ps1`. Az eredmény: `_upstream-src/dist/DreameSprachpaket-HU.exe`.
 
