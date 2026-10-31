@@ -475,6 +475,20 @@ def main() -> None:
         ),
     ])
 
+    # NavShell renders labels with icon prefixes ("🏠 Start") and uppercases
+    # section titles. The generic Tk text matcher cannot translate those
+    # combined strings. Translate only the labels/section at source while
+    # retaining internal navigation keys verbatim.
+    patch("dreamevoice/ui/shell.py", [
+        (
+            '        eintrag = Eintrag(key=key, label=label, icon=icon, seite=seite,',
+            '        from ..ui_hu import translate\n'
+            '        label = translate(label)\n'
+            '        section = translate(section)\n'
+            '        eintrag = Eintrag(key=key, label=label, icon=icon, seite=seite,',
+        ),
+    ])
+
     # The dialect combobox uses internal display strings to map back to the
     # selected object, so translate its PREFIX CONSTANTS instead of applying
     # a generic Combobox.values translation that could corrupt selection.
