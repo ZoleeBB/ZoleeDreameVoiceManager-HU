@@ -27,6 +27,7 @@ $files = @(
     @{from='dreamevoice/ui_hu.py'; to='dreamevoice/ui_hu.py'},
     @{from='requirements-hu-build.txt'; to='requirements-hu-build.txt'},
     @{from='scripts/apply_overlay.py'; to='scripts/apply_overlay.py'},
+    @{from='scripts/set_release_version.py'; to='scripts/set_release_version.py'},
     @{from='scripts/build-release.ps1'; to='scripts/build-release.ps1'},
     @{from='scripts/ci-selftest.py'; to='scripts/ci-selftest.py'},
     @{from='README.md'; to='README-HU.md'}
@@ -46,6 +47,9 @@ Push-Location $target
 try {
     python scripts/apply_overlay.py
     if ($LASTEXITCODE -ne 0) { throw 'HU overlay patch failed.' }
+    $version = (Get-Content -LiteralPath (Join-Path $root 'VERSION-HU') -Raw -Encoding UTF8).Trim()
+    python scripts/set_release_version.py $version
+    if ($LASTEXITCODE -ne 0) { throw 'HU version metadata update failed.' }
     python -m compileall -q main.py dreamevoice tests
     if ($LASTEXITCODE -ne 0) { throw 'Python syntax check failed.' }
 }
