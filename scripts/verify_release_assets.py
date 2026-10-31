@@ -12,6 +12,13 @@ import sys
 import tarfile
 from pathlib import Path
 
+# GitHub Windows runners may default to cp1252 even in pwsh. The human-
+# readable diagnostic output contains Hungarian accents; the binary file
+# validation itself is unchanged.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "voicepacks" / "assets"
 MANIFEST = ROOT / "voicepacks" / "elison-20261031.json"
