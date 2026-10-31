@@ -29,6 +29,12 @@ A régi `setup-private-repo.ps1` csak egy **új, üres** repository egyszeri lé
 - A magyar EXE neve `DreameSprachpaket-HU.exe`. Ez a saját build nem frissíti magát az eredeti projekt aláíratlan EXE-jére. A frissítések a saját GitHub Releases felületről tölthetők le.
 - Nem használ GitHub secretet a Dreame-bejelentkezéshez; a jelszó csak helyben, az alkalmazásba kerülhet.
 
+## ElevenLabs hibatűrő generálás (v1.4.0-hu.5)
+
+A hosszú magyar TTS-futtatásoknál az ElevenLabs a HTTP **429** állapotkóddal jelezheti, hogy túl sok párhuzamos kérés érkezett, vagy az API átmenetileg túlterhelt. Ez **nem azonos** a felhasználható kreditkeret elfogyásával. A magyar változat legfeljebb **2 párhuzamos TTS-kérést** indít (a Free és Starter csomagok alatt is biztonságos tartalékkal), és korlátozott számú exponenciális visszavárakozással próbálkozik újra. A HTTP 500/502/503/504 hibák szintén újrapróbálhatók, a valóban elégtelen kreditet (402) külön kezeli.
+
+Ha egy futás részleges csomagot készít, a már legenerált `.mp3` állományokat a program megtartja. **A pontosan ugyanazzal a hanggal, modellel és beállításokkal** újraindított generálás csak a hiányzó bemondásokhoz fordul az API-hoz. A felhasználó által módosított `hu_preset.py` mondatok változatlanok maradnak. A teljes hangcsomag előtt a készültséget az eredeti magyar csomag 181 bemondásához kell mérni, nem a gyári eredeti 611 fájljához.
+
 ## Magyar hangcsomag
 
 Első indításkor a program létrehozza a `Magyar – Vicces házimunkás` szerkeszthető **saját** hangcsomagot. Az ismert takarítási és hibaüzenetekhez vannak magyar mondatok, és a százalékos akkumulátorbemondásokat, helyiségneveket is magyarul készíti elő. **Nem teljes fordítás**: a még le nem fedett azonosítók az eredeti gyári hangon maradnak, így nem tűnnek el fontos figyelmeztetések.
