@@ -50,6 +50,24 @@ def main() -> None:
         ),
     ])
 
+    # Help and license are displayed in Tk Text (not Label) widgets;
+    # use fully reviewed Hungarian copy without changing user-edited text.
+    patch("dreamevoice/ui/app.py", [
+        (
+            "from ..paths import data_dir, icon_file, log_file",
+            "from ..paths import data_dir, icon_file, log_file\n"
+            "from ..ui_hu import HELP_TEXT_HU, HAFTUNG_HU",
+        ),
+        (
+            'text.insert("1.0", HELP_TEXT)',
+            'text.insert("1.0", HELP_TEXT_HU)',
+        ),
+        (
+            'text.insert("1.0", HAFTUNG)',
+            'text.insert("1.0", HAFTUNG_HU)',
+        ),
+    ])
+
     patch("dreamevoice/tts.py", [
         (
             "def pick_german_voice(preferred: str = \"\") -> Optional[Voice]:",
