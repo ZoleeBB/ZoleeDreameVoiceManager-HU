@@ -2,6 +2,12 @@
 
 > **Nem kell ElevenLabs-fiók, API-kulcs, kredit vagy hanggenerálás.** A letöltött hangok már fel vannak mondva magyarul. A program a ZIP 589 OGG-felvételét a **saját robotod eredeti hangcsomagjához** igazítja és az elkészült csomagot telepíti.
 
+## Automatikusan csatolt Release-fájlok
+
+A `.github/workflows/release.yml` minden új kiadás előtt meghívja a `scripts/verify_release_assets.py` validátort. Ez a rögzített SHA-256/MD5 és méret mellett az OGG-állományok, a teljes csomag 611 hangja, valamint a 6 gyári vezérlőfájl épségét is ellenőrzi.
+
+**Egyszeri üzembe helyezés:** töltsd fel az 589 OGG-s ZIP-et és az X50-es tar.gz-t **ugyanabban a commitban** a `voicepacks/assets/` könyvtárba. Az erre induló workflow a már meglévő aktuális Release hangfájljait is automatikusan hozzáadja/frissíti. A későbbi `VERSION-HU`-emelések ugyanezt elvégzik. Ha bármelyik fájl hiányzik, sérült vagy módosult ellenőrzőösszeg nélkül, a Release **meghiúsul**, nem publikál hiányos csomagot.
+
 ## Letöltés
 
 [**Kész magyar Elison hangok – GitHub Releases (v1.4.0-hu.8)**](https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/releases/tag/v1.4.0-hu.8)
@@ -10,7 +16,7 @@ Az **Assets** résznél a következőt töltsd le:
 
 `Zolee_Dreame_HU_Elison_589_OGG.zip` – 589 már előállított magyar OGG, **10 874 839 bájt**, SHA-256: `3de3e3d6556413caac45e95108354bfcf0fb10d8c9d6e030a2b878c0d8180f48`.
 
-**Figyelem:** a repó jelenleg **privát**. A linket csak olyan személy éri el, akinek hozzáférést adtál; a kész hangcsomag használatához önmagában nem kell ElevenLabs-hozzáférés. A fájl **csak azután jelenik meg** a Release-ben, hogy kézzel feltöltöttük. Ha az Assets alatt egyelőre nincs ZIP, ne indíts hanggenerálást; a kiadási fájl feltöltése még hiányzik.
+**Figyelem:** a repó jelenleg **privát**. A linket csak olyan személy éri el, akinek hozzáférést adtál; a kész hangcsomag használatához önmagában nem kell ElevenLabs-hozzáférés. A hangfájlokat **egyetlen egyszer** kell a repó [voicepacks/assets](assets/README.md) mappájába feltölteni. A GitHub Actions ezután **automatikusan csatolja a ZIP-et és a teljes X50 `.tar.gz` archívumot minden új Release-hez**, így a későbbi verzióknál nincs szükség ismételt kézi feltöltésre. A repó jelenleg privát; a Release-hez való hozzáférés GitHub-jogosultságot igényel.
 
 ## Telepítés a Dreame hangcsomag-kezelővel – másoknak
 
