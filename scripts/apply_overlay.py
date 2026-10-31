@@ -445,6 +445,36 @@ def main() -> None:
         ),
     ])
 
+    # Make the one-time generated Hungarian audio discoverable from the
+    # "Kész hangok" page. This opens the private GitHub release in a browser;
+    # the user can download the ZIP (GitHub login may be required), then
+    # import via the existing "Hangfelvételek importálása" flow without TTS.
+    patch("dreamevoice/ui/page_voice.py", [
+        (
+            '        # -- Auswahl ---------------------------------------------------',
+            '        # Magyar kész hangcsomag: nem igényel ElevenLabs-fiókot.\n'
+            '        hu_box = ttk.Frame(outer, style="TFrame")\n'
+            '        hu_box.pack(fill="x", pady=(0, 12))\n'
+            '        ttk.Label(hu_box,\n'
+            '                  text="Kész magyar Elison hang: 589 bemondás, újragenerálás nélkül.",\n'
+            '                  style="MutedBg.TLabel").pack(anchor="w")\n'
+            '        hu_actions = ttk.Frame(hu_box, style="TFrame")\n'
+            '        hu_actions.pack(anchor="w", pady=(6, 0))\n'
+            '        ttk.Button(hu_actions,\n'
+            '                   text="Kész magyar hang letöltése",\n'
+            '                   command=lambda: webbrowser.open(\n'
+            '                       "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU/"\n'
+            '                       "releases/tag/v1.4.0-hu.8")).pack(side="left")\n'
+            '        ttk.Button(hu_actions,\n'
+            '                   text="Letöltött hangok importálása",\n'
+            '                   style="Small.TButton",\n'
+            '                   command=lambda: self.gehe_zu("eigene")).pack(\n'
+            '                       side="left", padx=(8, 0))\n'
+            '\n'
+            '        # -- Auswahl ---------------------------------------------------',
+        ),
+    ])
+
     # This call occurs in 4 guard locations as well as the voice combobox.
     path = ROOT / "dreamevoice/ui/tab_store.py"
     s = path.read_text(encoding="utf-8-sig")
