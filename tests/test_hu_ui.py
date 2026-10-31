@@ -61,6 +61,31 @@ class HungarianUiTests(unittest.TestCase):
             print(f"  {name}:{line}: {value[:160]!r}")
         self.assertTrue(root.is_dir())
 
+    def test_windows_tk_widgets_translate_in_real_ui(self):
+        """Exercise the actual tkinter constructors and live updates on CI."""
+        import os
+        if os.name != "nt":
+            self.skipTest("Windows GUI runner required")
+        import tkinter as tk
+        from tkinter import ttk
+        from dreamevoice.ui_hu import enable
+
+        enable()
+        enable()  # Installing the hooks twice must not stack wrappers.
+        root = tk.Tk()
+        root.withdraw()
+        try:
+            root.title("Dreame Sprachpaket-Manager")
+            self.assertEqual(root.title(), "Dreame hangcsomag-kezelő")
+            label = ttk.Label(root, text="Einstellungen")
+            self.assertEqual(label.cget("text"), "Beállítások")
+            button = ttk.Button(root, text="Fertige Stimmen")
+            self.assertEqual(button.cget("text"), "Kész hangok")
+            button.configure(text="Abbrechen")
+            self.assertEqual(button.cget("text"), "Mégse")
+        finally:
+            root.destroy()
+
     def test_non_strings_untouched(self):
         self.assertIsNone(translate(None))
         self.assertEqual(translate(123), 123)
