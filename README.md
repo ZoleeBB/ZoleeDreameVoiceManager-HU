@@ -35,6 +35,19 @@ A hosszú magyar TTS-futtatásoknál az ElevenLabs a HTTP **429** állapotkódda
 
 Ha egy futás részleges csomagot készít, a már legenerált `.mp3` állományokat a program megtartja. **A pontosan ugyanazzal a hanggal, modellel és beállításokkal** újraindított generálás csak a hiányzó bemondásokhoz fordul az API-hoz. A felhasználó által módosított `hu_preset.py` mondatok változatlanok maradnak. A teljes hangcsomag előtt a készültséget az eredeti magyar csomag 181 bemondásához kell mérni, nem a gyári eredeti 611 fájljához.
 
+## Teljes magyar hangcsomag – hiányzó bemondások fordítása (v1.4.0-hu.7)
+
+Az X50 Ultra gyári hangcsomagja körülbelül 611 felvételt tartalmaz, a kezdeti vicces magyar készlet 183 bemondást tartalmazott. A különbség **nem ElevenLabs TTS-probléma**: a hiányzó hangazonosítókhoz még nincs magyar szöveg.
+
+A **Hangcsomag készítése → Magyar – Vicces házimunkás** oldalon két új gomb:
+
+1. **Hiányzó magyar hangok exportálása** – a robotból letöltött gyári csomag *valódi hangazonosítóit* ellenőrzi, és csak a magyarul még hiányzó sorokból készít UTF-8 szövegfájlt a **Dialekttexte** mappába. A fájl elején részletes, biztonságtudatos fordítási prompt van. A sorok formátuma: `azonosító | eredeti jelentés / DE+EN | magyar TTS-szöveg`.
+2. A fájlt átadhatod egy nyelvi modellnek fordításra, majd lektorálhatod. A roboton ismeretlen, címke nélküli hangokat *nem szabad kitalálni*: eredeti hangminta alapján kell beazonosítani és kitölteni. A fordítás csak a harmadik oszlopba kerülhet.
+3. **Magyar fordítások importálása** – kizárólag új, a gyári csomagban létező, hiányzó azonosítókat vesz át a meglévő `magyar_vicces` felhasználói szövegcsomagba. Nem írja felül a korábban szerkesztett mondatokat, nem törli az ElevenLabs-felvételeket, és a helykitöltőket kihagyja. Duplikált azonosítókat elutasít.
+4. Ezután ugyanazzal a hanggal és modellbeállításokkal a **Hangcsomag létrehozása** műveletet újból elindítva a program csak az új/hiányzó mondatokat generálja, a meglévők változatlanul megmaradnak. A kész csomagot telepítés előtt meg kell hallgatni.
+
+A fordítási prompt önmagában **nem fordít automatikusan**, és nem küld adatot külső AI-szolgáltatásnak. A katalógus német és angol megnevezései tájékoztató jellegűek, a hangfelvételek elsődlegesek. A teljes magyar lefedettség csak akkor jelenthető ki, ha a *ténylegesen rendelkezésre álló* gyári felvételek összes azonosítója magyar szöveget kapott és minden szöveghez új hangfájl készült.
+
 ## Magyar hangcsomag
 
 Első indításkor a program létrehozza a `Magyar – Vicces házimunkás` szerkeszthető **saját** hangcsomagot. Az ismert takarítási és hibaüzenetekhez vannak magyar mondatok, és a százalékos akkumulátorbemondásokat, helyiségneveket is magyarul készíti elő. **Nem teljes fordítás**: a még le nem fedett azonosítók az eredeti gyári hangon maradnak, így nem tűnnek el fontos figyelmeztetések.
