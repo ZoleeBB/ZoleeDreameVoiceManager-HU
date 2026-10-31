@@ -7,13 +7,13 @@ on:
       - VERSION-HU
       - 'voicepacks/assets/**'
     tags:
-      - 'v*-hu.*'
+      - 'v*.*.*'
   workflow_dispatch:
     inputs:
       release_tag:
-        description: 'Release version, e.g. v1.4.0-hu.1'
+        description: 'Release version, e.g. v1.5.0 (then v1.5.1)'
         required: true
-        default: 'v1.4.0-hu.1'
+        default: 'v1.5.0'
         type: string
 
 permissions:
@@ -63,7 +63,37 @@ jobs:
           } else {
               $releaseTag = (Get-Content -LiteralPath VERSION-HU -Raw -Encoding UTF8).Trim()
           }
-          if ($releaseTag -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+-hu\.[0-9]+$') {
+          if ($releaseTag -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+) {
+              throw "Invalid release tag: $releaseTag"
+          }
+          Write-Host "Publishing version: $releaseTag"
+          # Bundled ZIP is reusable on other models. The complete X50
+          # archive includes factory audio; keep this repository private.
+          $packs = @(
+              'voicepacks/assets/Zolee_Dreame_HU_Elison_589_OGG.zip',
+              'voicepacks/assets/Zolee_Dreame_X50_HU_Elison_Ready.tar.gz',
+              'voicepacks/assets/VOICEPACK_SHA256SUMS.txt'
+          )
+          gh release view "$releaseTag" --repo "$env:GITHUB_REPOSITORY" --json tagName 2>$null
+          if ($LASTEXITCODE -eq 0) {
+              # Asset upload commits on main also update the already published
+              # version, without a new version tag or manual asset transfer.
+              Write-Host "Release $releaseTag exists: refresh the voice packs."
+              gh release upload "$releaseTag" @packs --clobber --repo "$env:GITHUB_REPOSITORY"
+              if ($LASTEXITCODE -ne 0) { throw 'Update of existing release voice pack assets failed.' }
+          } else {
+              $assets = @(
+                  '_upstream-src/dist/DreameSprachpaket-HU.exe',
+                  '_upstream-src/dist/SHA256SUMS.txt'
+              ) + $packs
+              gh release create "$releaseTag" @assets `
+                  --repo "$env:GITHUB_REPOSITORY" `
+                  --target "$env:GITHUB_SHA" `
+                  --title "Dreame Voice Manager HU $releaseTag" `
+                  --notes "Hungarian Windows build and pre-recorded Elison voice archives. The 589-OGG ZIP requires no ElevenLabs key. The full X50 archive contains factory audio; keep private pending redistribution review. See voicepacks/README.md for installation and SHA256SUMS.txt / VOICEPACK_SHA256SUMS.txt for hashes."
+              if ($LASTEXITCODE -ne 0) { throw 'Release creation failed.' }
+          }
+) {
               throw "Invalid release tag: $releaseTag"
           }
           Write-Host "Publishing version: $releaseTag"
