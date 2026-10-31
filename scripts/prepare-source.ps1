@@ -23,6 +23,7 @@ Write-Host "Verified upstream commit: $actual"
 $files = @(
     @{from='dreamevoice/hu_preset.py'; to='dreamevoice/hu_preset.py'},
     @{from='dreamevoice/hu_elevenlabs.py'; to='dreamevoice/hu_elevenlabs.py'},
+    @{from='dreamevoice/hu_translation.py'; to='dreamevoice/hu_translation.py'},
     @{from='dreamevoice/ui_hu.py'; to='dreamevoice/ui_hu.py'},
     @{from='requirements-hu-build.txt'; to='requirements-hu-build.txt'},
     @{from='scripts/apply_overlay.py'; to='scripts/apply_overlay.py'},

@@ -328,6 +328,123 @@ def main() -> None:
         ),
     ])
 
+    # Full-coverage HU workflow: export all genuinely missing robot sound IDs
+    # with a strict LLM translation prompt, import ONLY new validated texts.
+    patch("dreamevoice/ui/tab_store.py", [
+        (
+            'from .. import (audio, custom, dialect, dialektpakete, elevenlabs,',
+            'from .. import hu_translation\n'
+            'from .. import (audio, custom, dialect, dialektpakete, elevenlabs,',
+        ),
+        (
+            '        ttk.Label(card.content,\n'
+            '                  text=("Die Kostprobe spricht drei Sätze',
+            '        hu_actions = ttk.Frame(card.content, style="Card.TFrame")\n'
+            '        hu_actions.pack(fill="x", pady=(8, 0))\n'
+            '        ttk.Button(hu_actions, text="Hiányzó magyar hangok exportálása",\n'
+            '                   style="Small.TButton",\n'
+            '                   command=self._hu_export_missing).pack(side="left")\n'
+            '        ttk.Button(hu_actions, text="Magyar fordítások importálása",\n'
+            '                   style="Small.TButton",\n'
+            '                   command=self._hu_import_missing).pack(side="left", padx=(8, 0))\n'
+            '\n'
+            '        ttk.Label(card.content,\n'
+            '                  text=("Die Kostprobe spricht drei Sätze',
+        ),
+        (
+            '    def _on_export_texts(self) -> None:',
+            '    def _hu_export_missing(self) -> None:\n'
+            '        """Create an AI translation prompt for every uncovered robot sound."""\n'
+            '        from datetime import datetime\n'
+            '        pack = self._selected_dialect()\n'
+            '        if pack is None or pack.key != "magyar_vicces":\n'
+            '            messagebox.showinfo("Magyar hangcsomag",\n'
+            '                                "Válaszd ki a Magyar – Vicces házimunkás csomagot.",\n'
+            '                                parent=self)\n'
+            '            return\n'
+            '        if not self.state.has_base_pack:\n'
+            '            messagebox.showwarning("Hiányzó gyári csomag",\n'
+            '                                   "Előbb töltsd le a robot gyári hangcsomagját.",\n'
+            '                                   parent=self)\n'
+            '            return\n'
+            '        try:\n'
+            '            ids = official.list_sound_ids(self.state.base_pack_path)\n'
+            '            stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")\n'
+            '            destination = textfiles.folder() / (\n'
+            '                f"magyar_vicces_hianyzo_{stamp}.txt")\n'
+            '            path, count, unknown = hu_translation.export_prompt(\n'
+            '                ids, self._effective_dialect(pack).texts,\n'
+            '                self.state.catalog, destination)\n'
+            '        except (OSError, ValueError) as exc:\n'
+            '            show_error(self, self.theme, "Exportálási hiba", str(exc))\n'
+            '            return\n'
+            '        show_info(self, self.theme, "Magyar fordítási prompt elkészült",\n'
+            '                  f"{count} hiányzó bemondás listája exportálva.\\n{path}",\n'
+            '                  f"{unknown} hanghoz nincs megbízható szöveges leírás; "\n'
+            '                  "ezeket a gyári hang alapján kell beazonosítani. "\n'
+            '                  "A meglévő magyar szövegek érintetlenek maradtak. "\n'
+            '                  "A fájlt add át a fordításhoz, majd importáld vissza.")\n'
+            '\n'
+            '    def _hu_import_missing(self) -> None:\n'
+            '        """Merge only missing HU strings, preserving user edits and audio."""\n'
+            '        from dataclasses import replace\n'
+            '        pack = self._selected_dialect()\n'
+            '        if pack is None or pack.key != "magyar_vicces":\n'
+            '            messagebox.showinfo("Magyar hangcsomag",\n'
+            '                                "Válaszd ki a Magyar – Vicces házimunkás csomagot.",\n'
+            '                                parent=self)\n'
+            '            return\n'
+            '        if not self.state.has_base_pack:\n'
+            '            messagebox.showwarning("Hiányzó gyári csomag",\n'
+            '                                   "Előbb töltsd le a robot gyári hangcsomagját.",\n'
+            '                                   parent=self)\n'
+            '            return\n'
+            '        path = filedialog.askopenfilename(\n'
+            '            parent=self, title="Magyar bemondások importálása",\n'
+            '            initialdir=str(textfiles.folder()),\n'
+            '            filetypes=[("Szövegfájlok", "*.txt"), ("Minden fájl", "*.*")])\n'
+            '        if not path:\n'
+            '            return\n'
+            '        try:\n'
+            '            ids = official.list_sound_ids(self.state.base_pack_path)\n'
+            '            raw = Path(path).read_text(encoding="utf-8-sig")\n'
+            '            existing = self._effective_dialect(pack).texts\n'
+            '            result = hu_translation.parse_missing(raw, ids, existing)\n'
+            '        except (OSError, UnicodeError, ValueError) as exc:\n'
+            '            show_error(self, self.theme, "Importálási hiba", str(exc))\n'
+            '            return\n'
+            '        if not result.new:\n'
+            '            show_warning(self, self.theme, "Nincs új magyar szöveg",\n'
+            '                         "A fájlban nem található új, kitöltött bemondás.",\n'
+            '                         "A [FORDÍTANDÓ] és [HANGMINTA ELLENŐRZÉSE SZÜKSÉGES] "\n'
+            '                         "jelölők nem számítanak fordításnak.")\n'
+            '            return\n'
+            '        if not messagebox.askyesno(\n'
+            '            "Hiányzó bemondások hozzáadása",\n'
+            '            f"{len(result.new)} új magyar bemondást adunk a csomaghoz.\\n"\n'
+            '            f"{len(result.skipped_existing)} már meglévő szöveg érintetlen marad.\\n"\n'
+            '            f"{len(result.skipped_placeholder)} ellenőrizendő sor kimarad.\\n\\n"\n'
+            '            "A már elkészült hangfelvételek is megmaradnak. Folytatod?",\n'
+            '            parent=self):\n'
+            '            return\n'
+            '        try:\n'
+            '            updated = replace(pack, texts={**pack.texts, **result.new})\n'
+            '            custom.save(updated)\n'
+            '        except OSError as exc:\n'
+            '            show_error(self, self.theme, "Mentési hiba", str(exc))\n'
+            '            return\n'
+            '        self._refill_dialect_picker()\n'
+            '        self.log.append(f"{len(result.new)} új magyar bemondás hozzáadva.", "ok")\n'
+            '        show_info(self, self.theme, "Magyar szövegek hozzáadva",\n'
+            '                  f"{len(result.new)} új hangazonosító kapott magyar szöveget.",\n'
+            '                  "A korábbi szövegek és felvételek változatlanok. "\n'
+            '                  "A következő hanggenerálás csak a hiányzó új mondatokat "\n'
+            '                  "készíti el.")\n'
+            '\n'
+            '    def _on_export_texts(self) -> None:',
+        ),
+    ])
+
     # This call occurs in 4 guard locations as well as the voice combobox.
     path = ROOT / "dreamevoice/ui/tab_store.py"
     s = path.read_text(encoding="utf-8-sig")
