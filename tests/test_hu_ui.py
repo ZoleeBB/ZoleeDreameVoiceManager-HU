@@ -58,6 +58,18 @@ class HungarianUiTests(unittest.TestCase):
         self.assertIn("eleven_flash_v2_5",
                       translate("eleven_flash_v2_5"))
 
+    def test_unavailable_page_dialog_is_fully_hungarian(self):
+        self.assertEqual(translate("Kész hangok geht noch nicht"),
+                         "Kész hangok még nem használható")
+        self.assertEqual(
+            translate("Dafür muss die App erst wissen, welches Modell dein "
+                      "Roboter ist. Melde dich auf der Startseite an."),
+            "Először jelentkezz be a Kezdőlapon, hogy a program felismerje a robotod modelljét.")
+        self.assertIn(
+            "gyári hangcsomagja",
+            translate("Dafür fehlt noch das offizielle Sprachpaket deines "
+                      "Roboters. Es wird auf der Startseite einmalig geholt."))
+
     def test_static_widget_text_coverage_report(self):
         """Report untranslated static German labels without touching runtime data."""
         import ast
