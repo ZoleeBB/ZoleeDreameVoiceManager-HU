@@ -239,11 +239,11 @@ def main() -> None:
         ),
     ])
 
-    # Fix false "quota exhausted" results in long ElevenLabs runs.
-    # Official ElevenLabs error docs classify HTTP 429 as concurrency/rate
-    # limiting or system overload, NOT as exhausted account credits.
-    # The upstream implementation also ramps up to eight concurrent TTS
-    # requests; two workers leave room even on the smallest API plans.
+    # ElevenLabs HTTP 429 can mean either concurrency throttling or a
+    # genuinely exhausted quota. Preserve the original upstream contract
+    # for quota_exceeded and character_limit_exceeded, but prioritize
+    # structured transient error status over free-form message text.
+    # Limit simultaneous TTS requests to two for Starter / Free plans.
     patch("dreamevoice/elevenlabs.py", [
         (
             "MAX_GLEICHZEITIG = 8\nSTART_GLEICHZEITIG = 3",
@@ -265,8 +265,31 @@ def main() -> None:
             '                "Das Freikontingent füllt sich jeden Monat wieder auf. Bis "\n'
             '                "dahin kannst du das Paket mit der Windows-Stimme erzeugen.")\n'
             '        raise Ueberlastet(',
-            '        # Even an API message containing "quota" can refer to an\n'
-            '        # endpoint rate quota. For HTTP 429 always back off and retry.\n'
+            '        # The explicit ElevenLabs status is more precise than the\n'
+            '        # message text: a concurrency *rate quota* is not a\n'
+            '        # depleted character/credit quota.\n'
+            '        fehlerstatus = ""\n'
+            '        try:\n'
+            '            detail = resp.json().get("detail", {})\n'
+            '            if isinstance(detail, dict):\n'
+            '                fehlerstatus = str(detail.get("status") or "").lower()\n'
+            '        except (ValueError, TypeError, AttributeError):\n'
+            '            pass\n'
+            '        echtes_limit = fehlerstatus in (\n'
+            '            "quota_exceeded", "character_limit_exceeded",\n'
+            '            "insufficient_credits", "credit_limit_exceeded",\n'
+            '            "insufficient_quota")\n'
+            '        if not fehlerstatus:\n'
+            '            # Legacy servers may return no structured status.\n'
+            '            echtes_limit = any(w in meldung for w in (\n'
+            '                "character_limit_exceeded", "quota_exceeded",\n'
+            '                "insufficient_credits", "insufficient credit",\n'
+            '                "credit limit exceeded", "out of credits"))\n'
+            '        if echtes_limit:\n'
+            '            raise NetworkError(\n'
+            '                "Das Kontingent bei ElevenLabs ist aufgebraucht.",\n'
+            '                "ElevenLabs API: " + (_server_message(resp) or "(nincs részlet)")[:220]\n'
+            '                + "\\nEllenőrizd a kulcs és a fiók korlátait.")\n'
             '        raise Ueberlastet(',
         ),
         (
@@ -279,6 +302,16 @@ def main() -> None:
             '    return resp\n\n\ndef check_key(api_key: str) -> Quota:',
         ),
     ])
+    patch("dreamevoice/elevenlabs.py", [
+        (
+            '                        log("Das Bisherige bleibt gespeichert. Beim nächsten "\n'
+            '                            "Versuch macht die App genau hier weiter.")',
+            '                        log("ElevenLabs részlet: " + str(fehler)[:420])\n'
+            '                        log("Das Bisherige bleibt gespeichert. Beim nächsten "\n'
+            '                            "Versuch macht die App genau hier weiter.")',
+        ),
+    ])
+
     # Intermittent service errors should be retried, not packaged as partial
     # HU voice sets. This adjustment only targets the known transient error.
     patch("dreamevoice/elevenlabs.py", [
