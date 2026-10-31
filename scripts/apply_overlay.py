@@ -39,6 +39,17 @@ def main() -> None:
             "        from dreamevoice.ui.app import run\n        run()",
         ),
     ])
+    # Turn on Hungarian presentation hooks before the Tkinter UI is imported.
+    # The machine-facing German source identifiers remain unchanged.
+    patch("main.py", [
+        (
+            "        from dreamevoice.ui.app import run\n        run()",
+            "        from dreamevoice.ui_hu import enable\n"
+            "        enable()\n"
+            "        from dreamevoice.ui.app import run\n        run()",
+        ),
+    ])
+
     patch("dreamevoice/tts.py", [
         (
             "def pick_german_voice(preferred: str = \"\") -> Optional[Voice]:",
