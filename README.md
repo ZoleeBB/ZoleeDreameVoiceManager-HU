@@ -2,19 +2,21 @@
 
 **Alap:** [Anon365-Project/dreame-sprachpaket-manager](https://github.com/Anon365-Project/dreame-sprachpaket-manager), **v1.4.0**. Az eredeti forrás MIT-licenc alatt áll. Az eredeti LICENSE és szerzői információk változatlanul megmaradnak. Az eredeti német hanganyagok ettől független, saját felhasználási feltételek alá esnek; a saját HU build nem csomagolja őket.
 
-## Egyszeri import a privát GitHub-repóba
+## Jelenlegi felépítés és CI/CD
 
-1. Windowsra telepítsd a Git, GitHub CLI (`gh`) és Python 3.12 eszközöket.
-2. Terminálban: `gh auth login` (a **saját** GitHub-fiókoddal). Ha workflow-scope hibát kapsz, `gh auth refresh -s workflow`.
-3. Csomagold ki ezt a ZIP-et, és PowerShellben futtasd a kibontott könyvtárban:
+A privát repóban csak a **magyar kiegészítés (overlay)** van. A fordító workflow a GitHubról klónozza az eredeti program pontosan rögzített `v1.4.0` kiadását (`852f3043727fc85a3c06cb54231a00de013b1492`), majd a `scripts/apply_overlay.py` módosításait és a **saját szövegeidet** (`dreamevoice/hu_preset.py`) alkalmazza.
 
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\setup-private-repo.ps1
-   ```
+Ez szándékos: az upstream forrás nem kell még egyszer a repóba, és a magyar szövegeket a build sosem írja felül.
 
-A script az eredeti projektet a teljes Git historyval klónozza, létrehozza a `main` és `develop` brancheket, alkalmazza a HU módosításokat, majd a `ZoleeBB/DreameVoiceManager-HU` **privát** repositoryba pusholja őket. Létrehozza a `v1.4.0-hu.1` tag-et is. A tag elindítja az első automatikus Windows Release buildet.
+**Teendők:**
+1. Merge előtt a PR-nél ellenőrizd a `Dreame HU - Windows Build` eredményét.
+2. A sikeres build `DreameVoiceManager-HU` artifactja 7 napig tölthető le.
+3. A PR merge után a `main` branch `Actions → Dreame HU - Windows Release → Run workflow` menüjében állítsd a verziót `v1.4.0-hu.1` értékre. A build tesztel, majd a Releases felületre feltölti az EXE-t és az ellenőrzőösszeget.
+4. A Windows EXE nem aláírt. Indítás után ellenőrizd a magyar TTS-hangot és hallgasd meg az egyes bemondásokat a robotra telepítés előtt.
 
-**Fontos:** ez az importáló script futtatás előtt semmit nem változtat a GitHub-fiókodban; a repó tényleges létrehozásához a saját gépeden futó GitHub CLI jóváhagyott hozzáférése kell. Az importáló script nem tartalmaz jelszavakat vagy hozzáférési tokeneket.
+**Helyi fordítás:** PowerShellben futtasd a `./scripts/prepare-source.ps1` scriptet a repó gyökeréből, utána `cd _upstream-src`, majd `./scripts/build-release.ps1`. Az eredmény: `_upstream-src/dist/DreameSprachpaket-HU.exe`.
+
+A régi `setup-private-repo.ps1` csak egy **új, üres** repository egyszeri létrehozására készült; **itt már nem kell futtatni**.
 
 ## Fordítás és kiadás
 
@@ -39,7 +41,7 @@ A kezelőfelületen a `Dialekt erzeugen` (Dialekt előállítása) résznél az 
 - A CI build minden induláskor harmadik féltől származó Python-csomagokat telepít a PyPI-ról. A közvetlen verziók rögzítettek, a tranzitív függőségek még nincsenek teljes hash-lockkal lezárva.
 - A Microsoft Defender SmartScreen figyelmeztethet a nem digitálisan aláírt saját EXE-re.
 - A robot hangcsomag-telepítése gyári funkcióra épül, de nem hivatalosan támogatott. Nem módosítja a firmware-t, ám az X50 modellen való működés helyszíni ellenőrzése szükséges.
-- A release buildet **nem lehetett itt a GitHub szerverein ténylegesen lefuttatni**: a repó létrehozása és a Runner-futtatás után ellenőrizd az Actions felületét. A kezdeti projektfájlok szerkezetét és Python-szintaxisát helyben ellenőriztük, a Windows TTS-t és az FFmpeg-es EXE-t itt nem tudtuk végigtesztelni.
+- A CI eredményét a GitHub Actions futási naplója igazolja; a Windows TTS tényleges hangminőségét és a roboton való működést külön ellenőrizni kell. A kezdeti projektfájlok szerkezetét és Python-szintaxisát helyben ellenőriztük, a Windows TTS-t és az FFmpeg-es EXE-t itt nem tudtuk végigtesztelni.
 
 ## Saját változat frissítése
 
