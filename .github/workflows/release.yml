@@ -2,6 +2,9 @@ name: Dreame HU - Windows Release
 
 on:
   push:
+    branches: [main]
+    paths:
+      - VERSION-HU
     tags:
       - 'v*-hu.*'
   workflow_dispatch:
@@ -41,24 +44,45 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref_name }}
+          MANUAL_TAG: ${{ inputs.release_tag || '' }}
         run: |
           $ErrorActionPreference = 'Stop'
           if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch' -and $env:GITHUB_REF_NAME -ne 'main') {
               throw 'Manual releases must be started on the main branch.'
           }
-          if ($env:RELEASE_TAG -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+-hu\.[0-9]+$') {
-              throw "Invalid release tag: $env:RELEASE_TAG"
+          if ($env:GITHUB_REF_TYPE -eq 'tag') {
+              $releaseTag = $env:GITHUB_REF_NAME
+          } elseif ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
+              $releaseTag = $env:MANUAL_TAG
+          } else {
+              $releaseTag = (Get-Content -LiteralPath VERSION-HU -Raw -Encoding UTF8).Trim()
           }
-          $existing = gh release view "$env:RELEASE_TAG" --repo "$env:GITHUB_REPOSITORY" --json tagName 2>$null
+          if ($releaseTag -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+-hu\.[0-9]+
+          $existing = gh release view "$releaseTag" --repo "$env:GITHUB_REPOSITORY" --json tagName 2>$null
           if ($LASTEXITCODE -eq 0) {
-              throw "Release already exists: $env:RELEASE_TAG"
+              throw "Release already exists: $releaseTag"
           }
-          gh release create "$env:RELEASE_TAG" `
+          gh release create "$releaseTag" `
               '_upstream-src/dist/DreameSprachpaket-HU.exe' `
               '_upstream-src/dist/SHA256SUMS.txt' `
               --repo "$env:GITHUB_REPOSITORY" `
               --target "$env:GITHUB_SHA" `
-              --title "Dreame Voice Manager HU $env:RELEASE_TAG" `
+              --title "Dreame Voice Manager HU $releaseTag" `
+              --notes "Private Windows build based on upstream v1.4.0 (commit 852f3043) and the Hungarian overlay. Check SHA256SUMS.txt. This EXE is not digitally signed."
+          if ($LASTEXITCODE -ne 0) { throw 'Release creation failed.' }
+) {
+              throw "Invalid release tag: $releaseTag"
+          }
+          Write-Host "Publishing version: $releaseTag"
+          $existing = gh release view "$releaseTag" --repo "$env:GITHUB_REPOSITORY" --json tagName 2>$null
+          if ($LASTEXITCODE -eq 0) {
+              throw "Release already exists: $releaseTag"
+          }
+          gh release create "$releaseTag" `
+              '_upstream-src/dist/DreameSprachpaket-HU.exe' `
+              '_upstream-src/dist/SHA256SUMS.txt' `
+              --repo "$env:GITHUB_REPOSITORY" `
+              --target "$env:GITHUB_SHA" `
+              --title "Dreame Voice Manager HU $releaseTag" `
               --notes "Private Windows build based on upstream v1.4.0 (commit 852f3043) and the Hungarian overlay. Check SHA256SUMS.txt. This EXE is not digitally signed."
           if ($LASTEXITCODE -ne 0) { throw 'Release creation failed.' }
