@@ -68,6 +68,39 @@ def main() -> None:
         ),
     ])
 
+    # App-wide donation controls: header remains visible on every page.
+    # The original author/license remains attributed in About; only this
+    # custom fork's project/support links point to the HU project.
+    patch("dreamevoice/__init__.py", [
+        (
+            'PROJEKT_URL = "https://github.com/Anon365-Project/dreame-sprachpaket-manager"',
+            'PROJEKT_URL = "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU"',
+        ),
+        (
+            'SPENDEN_URL = "https://paypal.me/anon365project"',
+            'SPENDEN_URL = "https://ko-fi.com/E1H8299KGN"',
+        ),
+    ])
+    patch("dreamevoice/ui/app.py", [
+        (
+            '        self.bind("<F11>", lambda _e: self._toggle_maximize())',
+            '        # These two links are in the persistent header,\n'
+            '        # so they remain available on ALL tabs/pages.\n'
+            '        ttk.Button(right, text="Ko-fi támogatás",\n'
+            '                   style="Small.TButton",\n'
+            '                   command=lambda: webbrowser.open(\n'
+            '                       "https://ko-fi.com/E1H8299KGN")).pack(\n'
+            '                       side="left", padx=(8, 0))\n'
+            '        ttk.Button(right, text="Revolut támogatás",\n'
+            '                   style="Small.TButton",\n'
+            '                   command=lambda: webbrowser.open(\n'
+            '                       "https://revolut.me/zoleebb")).pack(\n'
+            '                       side="left", padx=(8, 0))\n'
+            '\n'
+            '        self.bind("<F11>", lambda _e: self._toggle_maximize())',
+        ),
+    ])
+
     patch("dreamevoice/tts.py", [
         (
             "def pick_german_voice(preferred: str = \"\") -> Optional[Voice]:",
