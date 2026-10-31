@@ -69,13 +69,10 @@ def main() -> None:
     ])
 
     # App-wide donation controls: header remains visible on every page.
-    # The original author/license remains attributed in About; only this
-    # custom fork's project/support links point to the HU project.
+    # Preserve the upstream PROJEKT_URL: its self-tests and original-author
+    # attribution depend on it. The HU repo has a dedicated voice-pack
+    # download link. Only the fork's optional donation URL is customized.
     patch("dreamevoice/__init__.py", [
-        (
-            'PROJEKT_URL = "https://github.com/Anon365-Project/dreame-sprachpaket-manager"',
-            'PROJEKT_URL = "https://github.com/ZoleeBB/ZoleeDreameVoiceManager-HU"',
-        ),
         (
             'SPENDEN_URL = "https://paypal.me/anon365project"',
             'SPENDEN_URL = "https://ko-fi.com/E1H8299KGN"',
